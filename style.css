@@ -72,3 +72,7 @@ sup {
   line-height: 0;
   font-size: 12px;
 }
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
