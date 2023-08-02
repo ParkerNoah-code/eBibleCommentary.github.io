@@ -76,3 +76,19 @@ sup {
 html {
   -webkit-text-size-adjust: 100%;
 }
+
+/* Add custom styles for the button */
+#play-audio-button {
+  display: inline-block;
+  border: none;
+  cursor: pointer;
+  color: black;
+  font-size:12px;
+  outline: none;
+  background-color: rgb(223, 223, 223);
+}
+
+/* Hide the default audio controls */
+audio::-webkit-media-controls {
+  
+}
