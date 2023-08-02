@@ -79,7 +79,6 @@ html {
 
 /* Add custom styles for the button */
 #audio-button {
-  display: inline-block;
   border: none;
   cursor: pointer;
   color: black;
@@ -89,6 +88,8 @@ html {
 }
 
 #audio-element {
-  width: 100%; /* Change the width to your desired size */
-  height: 20px; /* Change the height to your desired size */
+  padding-left: 10px;
+  padding-right: 10px;
+  width: calc(100% - 20px);
+  height: 20px;
 }
