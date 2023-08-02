@@ -87,3 +87,8 @@ html {
   outline: none;
   background-color: rgb(223, 223, 223);
 }
+
+#audio-element {
+  width: 100%; /* Change the width to your desired size */
+  height: 20px; /* Change the height to your desired size */
+}
