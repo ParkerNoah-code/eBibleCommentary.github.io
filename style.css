@@ -87,7 +87,3 @@ html {
   outline: none;
   background-color: rgb(223, 223, 223);
 }
-
-audio::-webkit-media-controls {
-  visibility: visible;
-}
