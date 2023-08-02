@@ -78,17 +78,16 @@ html {
 }
 
 /* Add custom styles for the button */
-#play-audio-button {
+#audio-button {
   display: inline-block;
   border: none;
   cursor: pointer;
   color: black;
-  font-size:12px;
+  font-size: 12px;
   outline: none;
   background-color: rgb(223, 223, 223);
 }
 
 /* Hide the default audio controls */
 audio::-webkit-media-controls {
-  
 }
