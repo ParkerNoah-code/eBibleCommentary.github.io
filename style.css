@@ -88,6 +88,5 @@ html {
   background-color: rgb(223, 223, 223);
 }
 
-/* Hide the default audio controls */
 audio::-webkit-media-controls {
 }
