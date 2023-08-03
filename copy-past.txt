@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="../../../style.css" />
+    <script rel="script" type="text/javascript" src="../../../functions.js"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <header>
+        <h1>SERMON_AUTHOR</h1>
+      </header>
+
+      <ul>
+        <li>
+          <a href="../../../index.html">About</a> |
+          <a href="../../../Theology.html"> Theology</a> |
+          <a href="../../../OTIntro.html"> Old Testament</a> |
+          <a href="../../../NTIntro.html"> New Testament</a>
+        </li>
+      </ul>
+      
+      <section>
+        <p>
+          <a href="sermon-list.html"><span>Sermons</span></a>
+        </p>
+      </section>
+
+      <section>
+        <h2>SERMON_TITLE_AND_TEXT
+
+        </p>
+      </section>
+
+      <footer>
+        <p>&copy; 2023 ebiblecommentary. All rights reserved.</p>
+      </footer>
+    </div>
+  </body>
+</html>
+
+<button id="audio-button" onclick="playAudioWithControls()">▶</button>
+
+<audio id="audio-element"
+  src="https://ia800905.us.archive.org/10/items/SERMONINDEX_SID17586/SID17586.mp3"
+></audio>
