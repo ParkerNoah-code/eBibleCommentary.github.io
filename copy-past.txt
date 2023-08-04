@@ -1,3 +1,18 @@
+<!----------------------------------SOUND------------------------------------------------>
+<button id="audio-button" onclick="playAudioWithControls()">▶</button>
+
+<audio id="audio-element"
+  src="https://ia800905.us.archive.org/10/items/SERMONINDEX_SID17586/SID17586.mp3"
+></audio>
+
+<!------------------------------------TEXT---------------------------------------------->
+<button id="text-button">📄</button>
+
+<div id="content" class="hidden">
+  <p>CONTENT</p>
+</div>
+
+<!-----------------------------------TEMPLATE----------------------------------------------->
 <!DOCTYPE html>
 <html>
   <head>
@@ -39,9 +54,3 @@
     </div>
   </body>
 </html>
-
-<button id="audio-button" onclick="playAudioWithControls()">▶</button>
-
-<audio id="audio-element"
-  src="https://ia800905.us.archive.org/10/items/SERMONINDEX_SID17586/SID17586.mp3"
-></audio>

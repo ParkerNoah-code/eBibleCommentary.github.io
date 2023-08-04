@@ -77,19 +77,34 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
-/* Add custom styles for the button */
 #audio-button {
   border: none;
   cursor: pointer;
   color: black;
   font-size: 12px;
   outline: none;
-  background-color: rgb(223, 223, 223);
+  background-color: transparent;
+  padding-left: 5px;
+  padding-right: 4px;
 }
 
 #audio-element {
   padding-left: 10px;
   padding-right: 10px;
   width: calc(100% - 20px);
-  height: 20px;
+}
+
+#text-button {
+  border: none;
+  cursor: pointer;
+  color: black;
+  font-size: 12px;
+  outline: none;
+  background-color: transparent;
+  padding-left: 1px;
+  padding-right: 1px;
+}
+
+.hidden {
+  display: none;
 }
