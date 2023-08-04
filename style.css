@@ -108,3 +108,14 @@ html {
 .hidden {
   display: none;
 }
+
+img {
+  border: none;
+  cursor: pointer;
+  outline: none;
+  background-color: transparent;
+  padding-left: 1px;
+  padding-right: 1px;
+  position: relative;
+  top: 2px;
+}
