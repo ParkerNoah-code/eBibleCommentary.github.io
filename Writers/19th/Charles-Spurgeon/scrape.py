@@ -44,8 +44,8 @@ def write_content_to_file(url, content, index, total):
 
     print(f"Successfully saved content from URL {url} to file {filename}")
 total = 0
-url = 'https://www.sermonindex.net/modules/bible_books/?view=book&book=972'
-file_name = 'sermon-1902'
+url = 'https://www.sermonindex.net/modules/bible_books/?view=book&book=981'
+file_name = 'sermon-1916'
 author = 'Charles Spurgeon'
 title = 'Sermons'
 class_name = 'bookContentsPage'
@@ -90,7 +90,7 @@ with open(filename, 'w', encoding='utf-8') as file:
     contents = contents.replace('TITLE_OF_BOOK', title)
     contents = contents.replace('FILE_NAME', file_name)
     for i in range(1, t):
-        contents = contents.replace('TABLE_OF_CONTENTS', '<a href="sermon-' + str(i) + '.html">Sermon ' + str(i) + '</a><br> TABLE_OF_CONTENTS')
+        contents = contents.replace('TABLE_OF_CONTENTS', '<a href="sermon-' + file_name + '-' + str(i) + '.html">Sermon ' + str(i) + '</a><br> TABLE_OF_CONTENTS')
     contents = contents.replace('<br> TABLE_OF_CONTENTS', '')
     file.write(contents)
     print(t)
