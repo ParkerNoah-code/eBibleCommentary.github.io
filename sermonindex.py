@@ -56,20 +56,22 @@ def write_content_to_file(url, content, index, total):
         content = content.replace("</p>", "")
         content = content.replace("<p>", "</p><p>")
         content = content.replace('<div class="bookText">', '<!DOCTYPE html> <html> <head> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <link rel="stylesheet" type="text/css" href="../../../style.css" /> <script rel="script" type="text/javascript" src="../../../functions.js"></script> </head> <body> <div class="container"> <header> <h1>AUTHOR_NAME</h1> </header> REPLACEME')
-        content = content.replace('REPLACEME','<ul> <li> <a href="../../../index.html">About</a> | <a href="../../../Theology.html"> Theology</a> | <a href="../../../OTIntro.html"> Old Testament</a> | <a href="../../../NTIntro.html"> New Testament</a> </li> </ul> <section> <p> <a href="FILE_NAME.html"><span>TITLE_OF_BOOK</span></a> </p> </section> <section> <p>')
+        content = content.replace('REPLACEME','<ul> <li> <a href="../../../index.html">About</a> ??? <a href="../../../Theology.html"> Theology</a> ??? <a href="../../../OTIntro.html"> Old Testament</a> ??? <a href="../../../NTIntro.html"> New Testament</a> </li> </ul> <section> <p> <a href="FILE_NAME.html"><span>TITLE_OF_BOOK</span></a> </p> </section> <section> <p>')
         content = content.replace('</div>', '</p> </section> <footer> <p>&copy; 2023 ebiblecommentary. All rights reserved.</p> </footer> </div> </body> </html>')
         content = content.replace('AUTHOR_NAME', author)
         content = content.replace('TITLE_OF_BOOK', title)
         content = content.replace('FILE_NAME', file_name)
+        content = content.replace('|', '"')
+        content = content.replace('???', '|')
         file.write(content)
         total += 1
     return total
 
     print(f"Successfully saved content from URL {url} to file {filename}")
 total = 0
-url = 'https://www.sermonindex.net/modules/bible_books/?view=book&book=513'
+url = 'https://www.sermonindex.net/modules/bible_books/?view=book&book=428'
 file_name = 'sermon'
-author = 'George Whitefield'
+author = 'Augustine of Hippo'
 title = 'Sermons'
 class_name = 'bookContentsPage'
 links = get_links_from_div_class(url, class_name)
@@ -108,7 +110,7 @@ filename = os.path.dirname(os.path.abspath(__file__)) + f'/' + file_name + f'.ht
 with open(filename, 'w', encoding='utf-8') as file:
     contents = ''
     contents += f'<!DOCTYPE html> <html> <head> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <link rel="stylesheet" type="text/css" href="../../../style.css" /> <script rel="script" type="text/javascript" src="../../../functions.js"></script> </head> <body> <div class="container"> <header> <h1>AUTHOR_NAME</h1> </header> '
-    contents += f'<ul> <li> <a href="../../../index.html">About</a> | <a href="../../../Theology.html"> Theology</a> | <a href="../../../OTIntro.html"> Old Testament</a> | <a href="../../../NTIntro.html"> New Testament</a> </li> </ul> <section> <p> <a href="FILE_NAME.html"><span>TITLE_OF_BOOK</span></a> </p> </section> <section> <p> TABLE_OF_CONTENTS '
+    contents += f'<ul> <li> <a href="../../../index.html">About</a> ??? <a href="../../../Theology.html"> Theology</a> ??? <a href="../../../OTIntro.html"> Old Testament</a> ??? <a href="../../../NTIntro.html"> New Testament</a> </li> </ul> <section> <p> <a href="FILE_NAME.html"><span>TITLE_OF_BOOK</span></a> </p> </section> <section> <p> TABLE_OF_CONTENTS '
     contents += f'</p> </section> <footer> <p>&copy; 2023 ebiblecommentary. All rights reserved.</p> </footer> </div> </body> </html>'
     contents = contents.replace('AUTHOR_NAME', author)
     contents = contents.replace('TITLE_OF_BOOK', title)
@@ -116,6 +118,8 @@ with open(filename, 'w', encoding='utf-8') as file:
     for i in range(1, t):
         contents = contents.replace('TABLE_OF_CONTENTS', '<a href="' + file_name + '-' + str(i) + '.html">' + list_title[i] + '</a><br> TABLE_OF_CONTENTS')
     contents = contents.replace('<br> TABLE_OF_CONTENTS', '')
+    contents = contents.replace('|', '"')
+    contents = contents.replace('???', '|')
     file.write(contents)
     print(t)
 
