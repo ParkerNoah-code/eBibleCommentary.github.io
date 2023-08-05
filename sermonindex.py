@@ -25,6 +25,29 @@ def get_links_from_div_class(url, class_name):
     except requests.exceptions.RequestException as e:
         print("Error:", e)
         return []
+    
+def get_titles(url, class_name):
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+
+        soup = BeautifulSoup(response.content, 'html.parser')
+        div_elements = soup.find_all('div', class_=class_name)
+
+        base_url = response.url  # Get the base URL
+
+        titles = []
+        for div in div_elements:
+            # Find all 'a' tags within the 'div' and extract the 'href' attribute.
+            for a in div.find_all('a', href=True):
+                # Join the extracted link with the base URL to get the absolute URL.
+                absolute_link = urljoin(base_url, a['href'])
+                titles.append(a.get_text())
+
+        return titles
+    except requests.exceptions.RequestException as e:
+        print("Error:", e)
+        return []
 
 # Replace 'your_url_here' with the actual URL you want to parse.
 def write_content_to_file(url, content, index, total):
@@ -44,12 +67,13 @@ def write_content_to_file(url, content, index, total):
 
     print(f"Successfully saved content from URL {url} to file {filename}")
 total = 0
-url = 'https://www.sermonindex.net/modules/bible_books/?view=book&book=981'
-file_name = 'sermon-1916'
-author = 'Charles Spurgeon'
+url = 'https://www.sermonindex.net/modules/bible_books/?view=book&book=513'
+file_name = 'sermon'
+author = 'George Whitefield'
 title = 'Sermons'
 class_name = 'bookContentsPage'
 links = get_links_from_div_class(url, class_name)
+list_title = get_titles(url, class_name)
 
 print(links)
 
@@ -90,7 +114,7 @@ with open(filename, 'w', encoding='utf-8') as file:
     contents = contents.replace('TITLE_OF_BOOK', title)
     contents = contents.replace('FILE_NAME', file_name)
     for i in range(1, t):
-        contents = contents.replace('TABLE_OF_CONTENTS', '<a href="sermon-' + file_name + '-' + str(i) + '.html">Sermon ' + str(i) + '</a><br> TABLE_OF_CONTENTS')
+        contents = contents.replace('TABLE_OF_CONTENTS', '<a href="' + file_name + '-' + str(i) + '.html">' + list_title[i] + '</a><br> TABLE_OF_CONTENTS')
     contents = contents.replace('<br> TABLE_OF_CONTENTS', '')
     file.write(contents)
     print(t)
