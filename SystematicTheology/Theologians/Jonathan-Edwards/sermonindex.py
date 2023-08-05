@@ -17,9 +17,9 @@ def get_links_from_div_class(url, class_name):
         for div in div_elements:
             # Find all 'a' tags within the 'div' and extract the 'href' attribute.
             for a in div.find_all('a', href=True):
-                # Join the extracted link with the base URL to get the absolute URL.
-                absolute_link = urljoin(base_url, a['href'])
-                links.append(absolute_link)
+                if 'class' not in a.attrs:
+                    absolute_link = urljoin(base_url, a['href'])
+                    links.append(absolute_link)
 
         return links
     except requests.exceptions.RequestException as e:
@@ -40,9 +40,9 @@ def get_titles(url, class_name):
         for div in div_elements:
             # Find all 'a' tags within the 'div' and extract the 'href' attribute.
             for a in div.find_all('a', href=True):
-                # Join the extracted link with the base URL to get the absolute URL.
-                absolute_link = urljoin(base_url, a['href'])
-                titles.append(a.get_text())
+                if 'class' not in a.attrs:
+                    absolute_link = urljoin(base_url, a['href'])
+                    titles.append(a.get_text())
 
         return titles
     except requests.exceptions.RequestException as e:
@@ -69,11 +69,11 @@ def write_content_to_file(url, content, index, total):
 
     print(f"Successfully saved content from URL {url} to file {filename}")
 total = 0
-url = 'https://www.sermonindex.net/modules/bible_books/?view=book&book=428'
+url = 'https://www.apuritansmind.com/puritan-favorites/jonathan-edwards/sermons/'
 file_name = 'sermon'
-author = 'Augustine of Hippo'
+author = 'Jonathan Edwards'
 title = 'Sermons'
-class_name = 'bookContentsPage'
+class_name = 'et_pb_text_inner'
 links = get_links_from_div_class(url, class_name)
 list_title = get_titles(url, class_name)
 
