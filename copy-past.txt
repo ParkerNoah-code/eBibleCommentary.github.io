@@ -17,6 +17,14 @@
   <img src="../../../youtube.png" width="17" height="13" />
 </a>
 
+<!-----------------------------------MUSIC---------------------------------------------->
+<button id="music-button" onclick="playMusicWithControls()">♫</button>
+
+<audio id="music-element" src="TrustAndObey.mp3"></audio>
+<div id="music" class="hidden">
+  <p></p>
+</div>
+
 <!----------------------------------TEMPLATE-------------------------------------------->
 <!DOCTYPE html>
 <html>
