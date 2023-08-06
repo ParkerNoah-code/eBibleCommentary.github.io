@@ -105,6 +105,34 @@ html {
   padding-right: 1px;
 }
 
+#music-button {
+  border: none;
+  cursor: pointer;
+  color: black;
+  font-size: 12px;
+  outline: none;
+  background-color: transparent;
+  padding-left: 5px;
+  padding-right: 4px;
+}
+
+#music-element {
+  padding-left: 10px;
+  padding-right: 10px;
+  width: calc(100% - 20px);
+}
+
+#music-button {
+  border: none;
+  cursor: pointer;
+  color: black;
+  font-size: 12px;
+  outline: none;
+  background-color: transparent;
+  padding-left: 1px;
+  padding-right: 1px;
+}
+
 .hidden {
   display: none;
 }
