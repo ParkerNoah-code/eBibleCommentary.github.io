@@ -30,17 +30,18 @@ header {
   background-size: cover;
 }
 
-section h1 {
-  font-size: 20px;
-  text-align: center;
+section {
   padding-left: 10px;
   padding-right: 10px;
 }
 
+section h1 {
+  font-size: 20px;
+  text-align: center;
+}
+
 section h2 {
   font-size: 16px;
-  padding-left: 10px;
-  padding-right: 10px;
 }
 
 .tab {
@@ -49,8 +50,8 @@ section h2 {
 }
 
 .hangingindent {
-  padding-left: 32px;
-  text-indent: -22px;
+  padding-left: 15px;
+  text-indent: -15px;
   margin: 0;
 }
 
@@ -64,8 +65,6 @@ a:hover {
 }
 
 p {
-  padding-left: 10px;
-  padding-right: 10px;
 }
 
 sup {
