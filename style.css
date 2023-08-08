@@ -30,6 +30,10 @@ header {
   background-size: cover;
 }
 
+p[align="justify"] {
+  text-align: initial;
+}
+
 section {
   padding-left: 10px;
   padding-right: 10px;
