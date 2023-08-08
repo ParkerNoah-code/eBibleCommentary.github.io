@@ -72,13 +72,25 @@
             id="audio-button"
             onclick="playAudioWithControls()"
           >
-            ▶
+            ▶</button
+          ><button id="music-button" onclick="playMusicWithControls()">
+            ♫
           </button>
         </h2>
         <audio
           id="audio-element"
           src="https://cdn.gty.org/sermons/High/48-4.mp3"
         ></audio>
+        <audio id="music-element" src="FirmFoundation.mp3"></audio>
+        <div id="music" class="hidden">
+          <p>
+            Firm Foundation by
+            <a
+              href="https://www.sermonindex.net/modules/mydownloads/viewcat.php?cid=597"
+              ><em>Psalms, Hymns and Songs</em></a
+            >
+          </p>
+        </div>
         <h2>
           Ver 6.
           <em

@@ -120,9 +120,7 @@ html {
 }
 
 #music-element {
-  padding-left: 10px;
-  padding-right: 10px;
-  width: calc(100% - 20px);
+  width: calc(100%);
 }
 
 #music-button {
