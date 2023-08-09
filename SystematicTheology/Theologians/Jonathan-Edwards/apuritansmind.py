@@ -13,11 +13,15 @@ def get_content(url):
         book_text_div = soup.find_all('div', class_='et_pb_text_inner')
         if book_text_div:
             content = str(book_text_div)
-            
             return content
         else:
-            print(f"Error: No <div class=\"bookText\"> element found in URL {url}")
-            return ['','']
+            book_text_div = soup.find_all('div', class_='entry-content')
+            if book_text_div:
+                content = str(book_text_div)
+                return content
+            else:
+                print(f"Error: No <div class=\"bookText\"> element found in URL {url}")
+                return ''
     except requests.exceptions.RequestException as e:
         print(f"Error fetching URL {url}: {e}")
     
@@ -39,12 +43,13 @@ def create_files(file_name, author, title, titles, urls):
         filename = os.path.dirname(os.path.abspath(__file__)) + f'/' + file_name + f'-'+str(u)+'.html'
         content = ''
         with open(filename, 'w', encoding='utf-8') as file:
-            content += f'<!DOCTYPE html> <html> <head> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <link rel="stylesheet" type="text/css" href="../../../style.css" /   > <script rel="script" type="text/javascript" src="../../../functions.js"></script> </head> <body> <div class="container"> <header> <h1>AUTHOR_NAME</h1> </header> <ul> <li> <a   href="../../../index.html">About</a> | <a href="../../../Theology.html"> Theology</a> | <a href="../../../OTIntro.html"> Old Testament</a> | <a href="../../../NTIntro.html">    New Testament</a> </li> </ul> <section> <p> <a href="FILE_NAME.html"><span>TITLE_OF_BOOK</span></a> </p> </section> <section> <p> '
+            content += f'<!DOCTYPE html> <html> <head> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <link rel="stylesheet" type="text/css" href="../../../style.css" /   > <script rel="script" type="text/javascript" src="../../../functions.js"></script> </head> <body> <div class="container"> <header> <h1>AUTHOR_NAME</h1> </header> <ul> <li> <a   href="../../../index.html">About</a> | <a href="../../../Theology.html"> Theology</a> | <a href="../../../OTIntro.html"> Old Testament</a> | <a href="../../../NTIntro.html">    New Testament</a> </li> </ul> <section> <p> <a href="FILE_NAME.html"><span>TITLE_OF_BOOK</span></a> </p> </section> <section> <h2>TITLES_OF_SERMONS</h2> <p> '
             content += get_content(urls[u])
             content += f'</section> <footer> <p>&copy;    2023 ebiblecommentary. All rights reserved.</p> </footer> </div> </body> </html>'
             content = content.replace('AUTHOR_NAME', author)
             content = content.replace('TITLE_OF_BOOK', title)
             content = content.replace('FILE_NAME', file_name)
+            content = content.replace('TITLES_OF_SERMONS', titles[u])
             content = content.replace(' align="JUSTIFY"', '')
             content = content.replace('<blockquote>', '')
             content = content.replace('</blockquote>', '')
@@ -104,7 +109,6 @@ urls = [
   'https://www.apuritansmind.com/puritan-favorites/jonathan-edwards/sermons/the-churchs-marriage-to-her-sons-and-to-her-god/',
   'https://www.apuritansmind.com/puritan-favorites/jonathan-edwards/sermons/true-saints-when-absent-from-the-body-are-present-with-the-lord/',
   'https://www.apuritansmind.com/puritan-favorites/jonathan-edwards/sermons/god%E2%80%99s-awful-judgment-in-the-breaking-and-withering-of-the-strong-rods-of-a-community/',
-  'https://www.apuritansmind.com/puritan-favorites/jonathan-edwards/sermons/god%E2%80%99s-awful-judgment-in-the-breaking-and-withering-of-the-strong-rods-of-a-community/',
   'https://www.apuritansmind.com/puritan-favorites/jonathan-edwards/sermons/christ-the-example-of-ministers/',
   'https://www.apuritansmind.com/puritan-favorites/jonathan-edwards/sermons/true-grace-distinguished-from-the-experience-of-devils/',
   'https://www.apuritansmind.com/puritan-favorites/jonathan-edwards/sermons/a-farewell-sermon/',
@@ -125,8 +129,9 @@ urls = [
   'https://www.apuritansmind.com/puritan-favorites/jonathan-edwards/sermons/dishonesty/',
   'https://www.apuritansmind.com/puritan-favorites/jonathan-edwards/sermons/the-manner-in-which-the-salvation-of-the-soul-is-to-be-sought/',
   'https://www.apuritansmind.com/puritan-favorites/jonathan-edwards/sermons/peace-with-god/',
+  'https://www.apuritansmind.com/puritan-favorites/jonathan-edwards/sermons/the-peace-which-christ-gives-his-true-followers/',
   'https://www.apuritansmind.com/puritan-favorites/jonathan-edwards/sermons/safety-fullness-and-sweet-refreshment-to-be-found-in-christ/',
-  'https://www.apuritansmind.com/puritan-favorites/jonathan-edwards/sermons/the-pure-in-heart-blessed/',
+  'https://www.apuritansmind.com/puritan-favorites/jonathan-edwards/sermons/the-pure-in-heart-blessed/'
 ]
 
 create_files(file_name, author, title, titles, urls)
