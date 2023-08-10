@@ -9,7 +9,7 @@
   <body>
     <div class="container">
       <header>
-        <h1>Psalms Commentary</h1>
+        <h1>TITLE_PLACEHOLDER</h1>
       </header>
 
       <ul>
@@ -23,12 +23,14 @@
       
       <section>
         <p>
-          <a href="Commentary.html"><span>Psalms Commentary</span></a>
+          <a href="LINK_PLACEHOLDER.html"><span>LINK_NAME_PLACEHOLDER</span></a>
         </p>
       </section>
 
       <section>
-        
+        <h1></h1>
+        <h2></h2>
+        <p></p>
       </section>
 
       <footer>
