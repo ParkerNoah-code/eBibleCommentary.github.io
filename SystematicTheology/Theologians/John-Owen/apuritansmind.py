@@ -52,11 +52,11 @@ def create_files(file_name, author, title, titles, urls):
         
     print("Task completed successfully.")
 
-author = 'Jonathan Edwards'
+author = 'John Owen'
 title = 'The Idol of Free-Will'
 file_name = 'idol-of-free-will'
 titles = ['The Idol of Free-Will']
 urls = ['https://www.apuritansmind.com/puritan-favorites/john-owen/the-idol-of-free-will/']
 
 create_files(file_name, author, title, titles, urls)
-#create_table_of_contents(file_name, author, title, titles)
+#create_table_of_contents(file_name, author, title, titles) 
