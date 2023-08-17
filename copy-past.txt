@@ -17,6 +17,11 @@
   <img src="../../../youtube.png" width="17" height="13" />
 </a>
 
+<!-----------------------------------COMMENTARY----------------------------------------->
+<button id="showButton" onclick="visibility('Exposit')">Exposit</button>
+
+<div id="Background" class="commentary" style="display: none">
+
 <!-----------------------------------MUSIC---------------------------------------------->
 <button id="music-button" onclick="playMusicWithControls()">♫</button>
 

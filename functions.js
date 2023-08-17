@@ -43,3 +43,14 @@ document.addEventListener("DOMContentLoaded", function () {
     content.classList.toggle("hidden");
   });
 });
+
+function visibility(elementId) {
+  const contentElements = document.getElementsByClassName("commentary");
+  for (const element of contentElements) {
+    if (element.id === elementId) {
+      element.style.display = "block";
+    } else {
+      element.style.display = "none";
+    }
+  }
+}
