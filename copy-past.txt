@@ -55,8 +55,10 @@
       </ul>
       
       <section>
-        <p>
-          <a href="PLACEHOLDER.html"><span></span></a>
+        <p style="text-align: center">
+          <a href="Commentary.html"><span>John Commentary</span></a
+          ><br />
+          <a href="Text.html"><span>John Text</span> </a>
         </p>
       </section>
 
