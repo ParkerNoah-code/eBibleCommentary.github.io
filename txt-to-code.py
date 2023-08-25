@@ -39,6 +39,7 @@ code_text = code_text.replace("2Ti_","2 Tim ")
 code_text = code_text.replace("Tit_","Titus ")
 code_text = code_text.replace("Heb_","Heb ")
 code_text = code_text.replace("Jas_","James ")
+code_text = code_text.replace("Jud_","Jude ")
 code_text = code_text.replace("Rev_","Rev ")
 
 pyperclip.copy(code_text)
