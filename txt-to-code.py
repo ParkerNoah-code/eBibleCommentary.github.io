@@ -41,5 +41,6 @@ code_text = code_text.replace("Heb_","Heb ")
 code_text = code_text.replace("Jas_","James ")
 code_text = code_text.replace("Jud_","Jude ")
 code_text = code_text.replace("Rev_","Rev ")
+code_text = code_text.replace("<p></p>","")
 
 pyperclip.copy(code_text)

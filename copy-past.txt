@@ -106,8 +106,10 @@
       </ul>
 
       <section>
-        <p>
-          <a href="Commentary.html"><span>Commentary</span></a>
+        <p style="text-align: center">
+          <a href="Commentary.html"><span>John Commentary</span></a
+          ><br />
+          <a href="Text.html"><span>John Text</span> </a>
         </p>
       </section>
 
