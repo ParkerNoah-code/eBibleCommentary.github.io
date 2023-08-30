@@ -4,25 +4,29 @@ def create_files_with_index(base_name, num_files):
     script_directory = os.path.dirname(os.path.abspath(__file__))
     
     for i in range(1, num_files + 1):
-        file_name = os.path.join(script_directory, f"{base_name}{i}.html")
+        file_name = os.path.join(script_directory, f"{base_name}-{i}.html")
         with open(file_name, 'w') as file:
             file.write(html_content)
 
-base_name = "attributes"
-num_files = 14
+base_name = "systematic-theology1-3"
+num_files = 5
 html_content = """
 <!DOCTYPE html>
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="../../../style.css" />
-    <script rel="script" type="text/javascript" src="../../../functions.js"></script>
+    <script
+      rel="script"
+      type="text/javascript"
+      src="../../../functions.js"
+    ></script>
   </head>
 
   <body>
     <div class="container">
       <header>
-        <h1>Stephen Charnock</h1>
+        <h1>Augustus Strong</h1>
       </header>
 
       <ul>
@@ -33,12 +37,11 @@ html_content = """
           <a href="../../../NTIntro.html"> New Testament</a>
         </li>
       </ul>
-      
+
       <section>
         <p>
-          <a href="../theologians.html">Theologians</a
-          >: 
-          <a href="attributes.html">The Existence and Attributes of God</a>
+          <a href="../theologians.html">Theologians</a>:
+          <a href="systematic-theology.html">Systematic Theology</a>
         </p>
       </section>
 

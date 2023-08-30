@@ -13,7 +13,8 @@ else:
     code_text += "<p>" + html.escape(lines[0].strip()) + "</p>"
 
 for line in lines[1:]:
-    code_text += "<p>" + html.escape(line.strip()) + "</p>"
+    if not line.startswith("[pg "):
+        code_text += "<p>" + html.escape(line.strip()) + "</p>"
 
 code_text = code_text.replace("Gen_","Gen ")
 code_text = code_text.replace("Deu_","Deut ")
