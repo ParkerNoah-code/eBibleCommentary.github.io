@@ -56,16 +56,14 @@
       
       <section>
         <p style="text-align: center">
-          <a href="Commentary.html"><span>John Commentary</span></a
+          <a href="Commentary.html">Commentary</a
           ><br />
-          <a href="Text.html"><span>John Text</span> </a>
+          <a href="Text.html">Text</a>
         </p>
       </section>
 
       <section>
-        <p>PLACEHOLDER
-
-        </p>
+      
       </section>
 
       <footer>
