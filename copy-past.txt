@@ -113,30 +113,13 @@
 
       <section>
         <button id="showButton" onclick="visibility('Expositional')">Expositional</button>
-        <button id="showButton" onclick="visibility('Historical')">
-          Historical
-        </button>
         <button id="showButton" onclick="visibility('Exegetical')">
           Exegetical
         </button>
         <h2></h2>
         <div id="Expositional" class="commentary">
-          <h2>
-            Ver .
-            <em></em>
-          </h2>
-        </div>
-        <div id="Historical" class="commentary" style="display: none">
-          <h2>
-            Ver .
-            <em></em>
-          </h2>
         </div>
         <div id="Exegetical" class="commentary" style="display: none">
-          <h2>
-            Ver .
-            <em></em>
-          </h2>
         </div>
       </section>
 
