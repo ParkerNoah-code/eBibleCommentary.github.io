@@ -37,10 +37,17 @@ code_text = code_text.replace("Tit_","Titus ")
 code_text = code_text.replace("Phm_","Phm ")
 code_text = code_text.replace("1Ti_","1 Tim ")
 code_text = code_text.replace("2Ti_","2 Tim ")
+code_text = code_text.replace("1Pe_","1 Pet ")
+code_text = code_text.replace("2Pe_","2 Pet ")
 code_text = code_text.replace("Tit_","Titus ")
 code_text = code_text.replace("Heb_","Heb ")
 code_text = code_text.replace("Jas_","James ")
 code_text = code_text.replace("Jud_","Jude ")
+
+code_text = code_text.replace("1Jn_","1 Jn ")
+code_text = code_text.replace("2Jn_","2 Jn ")
+code_text = code_text.replace("3Jn_","3 Jn ")
+
 code_text = code_text.replace("Rev_","Rev ")
 code_text = code_text.replace("<p></p>","")
 
