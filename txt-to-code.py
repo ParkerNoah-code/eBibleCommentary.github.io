@@ -5,7 +5,7 @@ code_text = ""
 clipboard_text = pyperclip.paste()
 lines = clipboard_text.splitlines()
 
-title = False
+title = True
 
 if title:
     code_text += "<h2>" + html.escape(lines[0].strip()) + "</h2>"

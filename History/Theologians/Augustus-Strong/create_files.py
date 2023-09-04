@@ -8,8 +8,8 @@ def create_files_with_index(base_name, num_files):
         with open(file_name, 'w') as file:
             file.write(html_content)
 
-base_name = "systematic-theology3-3-5"
-num_files = 10
+base_name = "systematic-theology2-3"
+num_files = 4
 html_content = """
 <!DOCTYPE html>
 <html>
