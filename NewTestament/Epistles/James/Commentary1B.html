@@ -88,11 +88,27 @@
         </p>
       </section>
       <section id="sec-1B">
+        <button id="showButton" onclick="visibility('Expositional')">
+          Exposit
+        </button>
+        <button id="showButton" onclick="visibility('Background')">
+          Exposit
+        </button>
+        <button id="showButton" onclick="visibility('Historical')">
+          Exposit
+        </button>
+        <button id="showButton" onclick="visibility('Exegetical')">
+          Exposit
+        </button>
         <h2>
           B. Endurance Produced from Trials (1:2-4)
           <button id="music-button" onclick="playMusicWithControls()">♫</button>
         </h2>
         <audio id="music-element" src="James1.mp3"></audio>
+        <div id="Expositional" class="commentary"></div>
+        <div id="Background" class="commentary" style="display: none"></div>
+        <div id="Historical" class="commentary" style="display: none"></div>
+        <div id="Exegetical" class="commentary" style="display: none"></div>
         <h2>
           Ver 2.
           <em
