@@ -13,7 +13,7 @@
   <body>
     <div class="container">
       <header>
-        <h1>Psalms</h1>
+        <h1>Psalms Commentary</h1>
       </header>
 
       <ul>
@@ -27,26 +27,28 @@
 
       <section>
         <p style="text-align: center">
-          <a href="Commentary.html"><span>Psalms Commentary</span></a>
+          <a href="Intro.html"><span>Psalms</span></a>
         </p>
+        <p><a href="Commentary.html">Commentary</a>:</p>
       </section>
 
       <section>
-        <h1>Introduction</h1>
-        <h2>Outline</h2>
-        <p>
-          BOOK I. GENESIS (1-41)<br />
-          A. Introduction (1-2)<br />
-          <span class="tab"></span>Psalm 1 - Psalm 2
-        </p>
-        <p>BOOK II. EXODUS (42-72)</p>
-        <p></p>
-        <p>BOOK III. LEVITICUS (73-89)</p>
-        <p></p>
-        <p>BOOK IV. NUMBERS (90-106)</p>
-        <p></p>
-        <p>BOOK V. DUETERONOMY (107-150)</p>
-        <p></p>
+        <button id="showButton" onclick="visibility('Expository')">
+          Expository
+        </button>
+        <button id="showButton" onclick="visibility('Homiletical')">
+          Homiletical
+        </button>
+        <button id="showButton" onclick="visibility('Exegetical')">
+          Exegetical
+        </button>
+        <button id="showButton" onclick="visibility('Historical')">
+          Historical
+        </button>
+        <div id="Expository" class="commentary"></div>
+        <div id="Homiletical" class="commentary" style="display: none"></div>
+        <div id="Exegetical" class="commentary" style="display: none"></div>
+        <div id="Historical" class="commentary" style="display: none"></div>
       </section>
 
       <footer>
