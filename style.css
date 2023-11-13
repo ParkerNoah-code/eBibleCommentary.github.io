@@ -189,13 +189,14 @@ img {
 }
 
 #mandelbrotContainer {
+  display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
+  overflow: hidden; /* Add this to prevent scrollbars if the canvas is taller than the viewport */
 }
 
 #mandelbrotCanvas {
-  width: 100%;
-  height: 100%;
+  width: 100%; /* Full width of the container */
+  height: auto; /* Height adjusts to maintain aspect ratio */
 }
