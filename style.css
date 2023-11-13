@@ -187,3 +187,15 @@ img {
     display: none;
   }
 }
+
+#mandelbrotContainer {
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+#mandelbrotCanvas {
+  width: 100%;
+  height: 100%;
+}
