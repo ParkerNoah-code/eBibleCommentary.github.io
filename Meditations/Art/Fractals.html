@@ -256,67 +256,6 @@
         </script>
       </section>
 
-      <section>
-        <canvas id="artCanvas" style="width: 100%; height: 100%"></canvas>
-        <script>
-          window.onload = function () {
-            var canvas = document.getElementById("artCanvas");
-            var ctx = canvas.getContext("2d");
-            var maxIterations = 5;
-
-            // Function to get a random color
-            function getRandomColor() {
-              var letters = "0123456789ABCDEF";
-              var color = "#";
-              for (var i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-              }
-              return color;
-            }
-
-            // Function to draw a dynamic, colorful fractal
-            function drawFractal(x, y, size, iterations) {
-              if (iterations === 0) {
-                ctx.fillStyle = getRandomColor();
-                ctx.fillRect(x, y, size, size);
-                return;
-              }
-
-              var newSize = size / 3;
-              for (var i = 0; i < 3; i++) {
-                for (var j = 0; j < 3; j++) {
-                  if (i === 1 && j === 1) continue;
-                  var newX = x + i * newSize;
-                  var newY = y + j * newSize;
-
-                  // Rotate the canvas based on iteration count
-                  ctx.save();
-                  ctx.translate(newX + newSize / 2, newY + newSize / 2);
-                  ctx.rotate((iterations - 1) * (Math.PI / 6));
-                  ctx.translate(-newSize / 2, -newSize / 2);
-
-                  drawFractal(0, 0, newSize, iterations - 1);
-
-                  ctx.restore();
-                }
-              }
-            }
-
-            // Function to clear the canvas with fading effect
-            function clearCanvas() {
-              ctx.fillStyle = `rgba(255, 255, 255, 0.1)`;
-              ctx.fillRect(0, 0, canvas.width, canvas.height);
-            }
-
-            // Periodically update the canvas
-            setInterval(function () {
-              clearCanvas(); // Clear the canvas with a fading effect
-              drawFractal(0, 0, canvas.width, maxIterations); // Draw the fractal
-            }, 1000); // Update every 1000 milliseconds (1 second)
-          };
-        </script>
-      </section>
-
       <footer><p>&copy; 2023 ebiblecommentary. All rights reserved.</p></footer>
     </div>
   </body>
