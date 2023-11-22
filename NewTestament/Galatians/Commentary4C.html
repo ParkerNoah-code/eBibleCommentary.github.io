@@ -80,13 +80,26 @@
             id="audio-button"
             onclick="playAudioWithControls()"
           >
-            ▶
+            ▶</button
+          ><button id="music-button" onclick="playMusicWithControls()">
+            ♫
           </button>
         </h2>
         <audio
           id="audio-element"
           src="https://ia600301.us.archive.org/18/items/SERMONINDEX_SID7148/SID7148.mp3"
         ></audio>
+        <audio id="music-element" src="MustJesusBearTheCrossAlone.mp3"></audio>
+        <div id="music" class="hidden">
+          <p>
+            Must Jesus Bear the Cross Alone by
+            <a
+              href="https://www.sermonindex.net/modules/mydownloads/viewcat.php?cid=392"
+              target="_blank"
+              ><em>Russell's Hymns</em></a
+            >
+          </p>
+        </div>
         <div id="Expository" class="commentary">
           <h2>
             Ver 11.
