@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="../../../style.css" />
+    <script
+      rel="script"
+      type="text/javascript"
+      src="../../../functions.js"
+    ></script>
+  </head>
+  <body>
+    <div class="container">
+      <header><h1>Art</h1></header>
+      <ul>
+        <li>
+          <a href="../../../index.html">About</a> |
+          <a href="../../../Misc.html"> Misc</a> |
+          <a href="../../../OT.html"> Old Testament</a> |
+          <a href="../../../NT.html"> New Testament</a>
+        </li>
+      </ul>
+
+      <section>
+        <h2>Chicken</h2>
+        <canvas id="canvas" style="width: 50%; height: 30%"></canvas>
+        <script>
+            const canvas = document.getElementById("canvas");
+            const ctx = canvas.getContext("2d");
+            canvas.height = 163;
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = "black";
+            ctx.fillStyle = "black";
+            
+            //head
+            ctx.strokeStyle = "black";
+            ctx.fillStyle = "white";
+            ctx.beginPath();
+            ctx.fillRect(30, 40, 45, 40);
+            ctx.strokeRect(30, 40, 45, 40);
+            ctx.fill();
+            ctx.stroke();
+            ctx.strokeStyle = "black";
+            ctx.fillStyle = "black";
+
+            //head feathers
+            ctx.strokeStyle = "red";
+            ctx.fillStyle = "red";
+            ctx.fill();
+            ctx.beginPath();
+            ctx.ellipse(54, 24, 7, 15, 0, 1, 90);
+            ctx.ellipse(45, 25, 7, 15, 15.3, 10, 110);
+            ctx.ellipse(62, 25, 7, 15, -15.3, 10, 110);
+            ctx.fill();
+            ctx.stroke();
+            ctx.strokeStyle = "black";
+            ctx.fillStyle = "black";
+
+            //eye
+            ctx.beginPath();
+            ctx.ellipse(65, 52, 3, 5, 0, 0, Math.PI*2);
+            ctx.fill();
+            ctx.stroke();
+
+            //mouth
+            ctx.strokeStyle = "black";
+            ctx.fillStyle = "white";
+            ctx.beginPath();
+            ctx.fillRect(75, 60, 8, 8);
+            ctx.strokeRect(75, 60, 8, 8);
+            ctx.strokeStyle = "red";
+            ctx.fillStyle = "red";
+            ctx.ellipse(81, 75, 4, 7, 15.5, 0, Math.PI*2);
+            ctx.fill();
+            ctx.stroke();
+            ctx.strokeStyle = "black";
+            ctx.fillStyle = "black";
+
+            //neck
+            ctx.strokeStyle = "black";
+            ctx.fillStyle = "white";
+            ctx.beginPath();
+            ctx.fillRect(53, 80, 8, 10);
+            ctx.strokeRect(53, 80, 8, 10);
+            ctx.stroke();
+            ctx.strokeStyle = "black";
+            ctx.fillStyle = "black";
+
+            //body
+            ctx.strokeStyle = "black";
+            ctx.fillStyle = "white";
+            ctx.beginPath();
+            ctx.rect(13, 90, 65, 30);
+            ctx.fill();
+            ctx.stroke();
+            ctx.strokeStyle = "black";
+            ctx.fillStyle = "black";
+
+            //hand
+            ctx.beginPath();
+            ctx.strokeRect(35, 100, 23, 12);
+
+            //fingers
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(47, 103)
+            ctx.lineTo(57, 103);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(47, 106)
+            ctx.lineTo(57, 106);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(47, 109)
+            ctx.lineTo(57, 109);
+            ctx.stroke();
+
+            //legs
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = "black";
+            ctx.fillStyle = "white";
+            ctx.beginPath();
+            ctx.fillRect(63, 120, 10, 20);
+            ctx.strokeRect(63, 120, 10, 20);
+
+            ctx.beginPath();
+            ctx.fillRect(45, 120, 10, 20);
+            ctx.strokeRect(45, 120, 10, 20);
+            ctx.strokeStyle = "black";
+            ctx.fillStyle = "black";
+
+            //left foot
+            ctx.beginPath();
+            ctx.ellipse(57, 145, 3, 5, -0.3, 1, 90);
+            ctx.ellipse(50, 145, 3, 5, 15.7, 10, 110);
+            ctx.ellipse(43, 145, 3, 5, -15, 10, 110);
+            ctx.fill();
+            ctx.stroke();
+
+            //right foot
+            ctx.beginPath();
+            ctx.ellipse(75, 145, 3, 5, -1, 1, 90);
+            ctx.ellipse(70, 146, 3, 5, 15, 10, 110);
+            ctx.ellipse(65, 146, 3, 5, -16, 10, 110);
+            ctx.fill();
+            ctx.stroke();
+        </script>
+      </section>
+
+      <footer>
+        <p>&copy; 2023 ebiblecommentary. All rights reserved.</p>
+      </footer>
+    </div>
+  </body>
+</html>
