@@ -6,13 +6,19 @@
   color: white;
 }
 
+#content-dropdown {
+  max-height: 150px;
+  overflow-y: auto;
+  width: 100%;
+}
+
 .right-boxes button {
   margin-left: 10px;
 }
 
 .container {
-  max-width: 750px; /* Maximum width of the page */
-  margin: 0 auto; /* Center the page horizontally */
+  max-width: 750px;
+  margin: 0 auto;
   margin-bottom: 0;
   background-color: rgb(223, 223, 223);
 }
