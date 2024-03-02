@@ -4,29 +4,23 @@ document.addEventListener("DOMContentLoaded", function () {
   const rightBoxes = document.querySelectorAll(".right-boxes button");
   const hiddenInput = document.createElement("input");
   hiddenInput.type = "hidden";
-  hiddenInput.id = "current-content";
+  hiddenInput.id = "current-content-name"; // Adjusted the ID for clarity
   contentArea.appendChild(hiddenInput);
 
   // Dynamically load content and manage button visibility
   function loadContent(contentName) {
-    // If the selected content is already loaded, only update button visibility
-    if (hiddenInput.value === contentName) {
-      updateButtonVisibility();
-      return;
-    }
+    // Update hidden input value immediately for comparison purposes
+    hiddenInput.value = contentName;
 
-    // Clear existing content and load new content
-    contentArea.innerHTML = ""; // Clear the content area
-    contentArea.appendChild(hiddenInput); // Re-add the hidden input to the content area
+    // Fetch and load new content only if different from current
     fetch(`${contentName}.html`)
       .then((response) => {
         if (!response.ok) throw new Error("Network response was not ok");
         return response.text();
       })
       .then((html) => {
-        contentArea.innerHTML = html; // Load new content
-        hiddenInput.value = contentName; // Update the hidden value
-        updateButtonVisibility();
+        contentArea.innerHTML = html; // Replace existing content
+        updateButtonVisibility(); // Update visibility after content is loaded
         updateURL(contentName);
       })
       .catch((error) => {
@@ -34,17 +28,19 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
-  // Update button visibility based on available content IDs
+  // Update button visibility based on available content IDs within the content area
   function updateButtonVisibility() {
     rightBoxes.forEach((button) => {
-      const contentId = button.id.replace("show", "");
-      document.getElementById(contentId)
-        ? (button.style.display = "")
-        : (button.style.display = "none");
+      const contentId = button.id.replace("show", ""); // Extract the ID meant for content
+      if (contentArea.querySelector(`#${contentId}`)) {
+        button.style.display = ""; // Show button if content ID exists
+      } else {
+        button.style.display = "none"; // Hide button if content ID does not exist
+      }
     });
   }
 
-  // URL state management
+  // URL state management for reflecting current content and button states in the URL
   function updateURL(contentName, contentId = "") {
     const newUrl = `${window.location.pathname}?content=${contentName}${
       contentId ? `&id=${contentId}` : ""
@@ -52,33 +48,24 @@ document.addEventListener("DOMContentLoaded", function () {
     window.history.pushState({ path: newUrl }, "", newUrl);
   }
 
-  // URL parsing and content initialization
+  // Initialize content and buttons based on URL parameters
   function initContentFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
     const contentName = urlParams.get("content");
-    const contentId = urlParams.get("id");
 
     if (contentName) {
       contentDropdown.value = contentName;
-      loadContent(contentName);
+      loadContent(contentName); // Load content if specified in URL
     } else {
-      // No specific content requested, check button visibility based on initial content
-      hiddenInput.value = ""; // Ensure hidden input is reset for initial state
-      updateButtonVisibility();
-    }
-
-    if (contentId) {
-      const content = document.getElementById(contentId);
-      if (content) {
-        content.style.display = "";
-      }
+      // No content specified, ensure correct initial state
+      updateButtonVisibility(); // This ensures buttons are correctly shown/hidden based on initial content
     }
   }
 
-  // Listen to dropdown changes
+  // Listen for dropdown changes to load corresponding content
   contentDropdown.addEventListener("change", function () {
     loadContent(this.value);
   });
 
-  initContentFromURL();
+  initContentFromURL(); // Ensure proper initialization on document load
 });
