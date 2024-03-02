@@ -12,6 +12,9 @@ function loadContent(contentName) {
     .then((html) => {
       // Inject the fetched HTML into the content area
       document.getElementById("content-area").innerHTML = html;
+
+      // Update the button visibility based on the new content
+      updateButtonVisibility();
     })
     .catch((error) => {
       console.error("Failed to load content:", error);
