@@ -33,7 +33,8 @@ function show(id) {
 }
 
 document.addEventListener("DOMContentLoaded", (event) => {
-  document.getElementById("showH").addEventListener("click", () => show("H"));
+  document.getElementById("showI").addEventListener("click", () => show("I"));
+  document.getElementById("showT").addEventListener("click", () => show("T"));
   document.getElementById("showC").addEventListener("click", () => show("C"));
-  document.getElementById("showE").addEventListener("click", () => show("E"));
+  document.getElementById("showH").addEventListener("click", () => show("H"));
 });
