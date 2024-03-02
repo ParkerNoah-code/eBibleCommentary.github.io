@@ -4,68 +4,81 @@ document.addEventListener("DOMContentLoaded", function () {
   const rightBoxes = document.querySelectorAll(".right-boxes button");
   const hiddenInput = document.createElement("input");
   hiddenInput.type = "hidden";
-  hiddenInput.id = "current-content-name"; // Adjusted the ID for clarity
+  hiddenInput.id = "current-content-name";
   contentArea.appendChild(hiddenInput);
 
-  // Dynamically load content and manage button visibility
-  function loadContent(contentName) {
-    // Update hidden input value immediately for comparison purposes
+  function loadContent(contentName, buttonId = null) {
+    // Update hidden input value
     hiddenInput.value = contentName;
 
-    // Fetch and load new content only if different from current
     fetch(`${contentName}.html`)
       .then((response) => {
         if (!response.ok) throw new Error("Network response was not ok");
         return response.text();
       })
       .then((html) => {
-        contentArea.innerHTML = html; // Replace existing content
-        updateButtonVisibility(); // Update visibility after content is loaded
-        updateURL(contentName);
+        contentArea.innerHTML = html;
+        updateButtonVisibility();
+        // Display content associated with button ID, if specified
+        displayContentById(buttonId);
+        updateURL(contentName, buttonId);
       })
       .catch((error) => {
         console.error("Failed to load content:", error);
       });
   }
 
-  // Update button visibility based on available content IDs within the content area
   function updateButtonVisibility() {
     rightBoxes.forEach((button) => {
-      const contentId = button.id.replace("show", ""); // Extract the ID meant for content
+      const contentId = button.id.replace("show", "");
       if (contentArea.querySelector(`#${contentId}`)) {
-        button.style.display = ""; // Show button if content ID exists
+        button.style.display = "";
       } else {
-        button.style.display = "none"; // Hide button if content ID does not exist
+        button.style.display = "none";
       }
     });
   }
 
-  // URL state management for reflecting current content and button states in the URL
-  function updateURL(contentName, contentId = "") {
+  function displayContentById(buttonId) {
+    if (!buttonId) return;
+    const contentDivs = contentArea.querySelectorAll("div");
+    contentDivs.forEach((div) => {
+      div.style.display = div.id === buttonId ? "" : "none";
+    });
+  }
+
+  function updateURL(contentName, buttonId) {
     const newUrl = `${window.location.pathname}?content=${contentName}${
-      contentId ? `&id=${contentId}` : ""
+      buttonId ? `&buttonId=${buttonId}` : ""
     }`;
     window.history.pushState({ path: newUrl }, "", newUrl);
   }
 
-  // Initialize content and buttons based on URL parameters
   function initContentFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
     const contentName = urlParams.get("content");
+    const buttonId = urlParams.get("buttonId");
 
     if (contentName) {
       contentDropdown.value = contentName;
-      loadContent(contentName); // Load content if specified in URL
+      loadContent(contentName, buttonId);
     } else {
-      // No content specified, ensure correct initial state
-      updateButtonVisibility(); // This ensures buttons are correctly shown/hidden based on initial content
+      updateButtonVisibility(); // Ensure buttons are shown/hidden based on initial content
+      displayContentById(buttonId); // Display content for the button ID if present
     }
   }
 
-  // Listen for dropdown changes to load corresponding content
+  rightBoxes.forEach((button) => {
+    button.addEventListener("click", function () {
+      const buttonId = this.id.replace("show", "");
+      displayContentById(buttonId);
+      updateURL(hiddenInput.value, buttonId);
+    });
+  });
+
   contentDropdown.addEventListener("change", function () {
     loadContent(this.value);
   });
 
-  initContentFromURL(); // Ensure proper initialization on document load
+  initContentFromURL();
 });
