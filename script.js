@@ -1,62 +1,50 @@
-// Function to load content based on the button clicked
-function loadContent(contentName) {
-  if (!contentName) return; // Do nothing if no content is selected
+// Function to directly show or hide the corresponding content without loading from HTML files
+function showContent(contentId) {
+  const contentAreaDivs = document.querySelectorAll("#content-area > div");
+  let isContentAlreadyVisible = false;
 
-  // Fetch the HTML file based on contentName
-  fetch(`${contentName}.html`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.text();
-    })
-    .then((html) => {
-      // Clear existing content and inject the fetched HTML into the content area
-      const contentArea = document.getElementById("content-area");
-      contentArea.innerHTML = html; // Inject new content
+  contentAreaDivs.forEach((div) => {
+    if (div.id === contentId) {
+      isContentAlreadyVisible = div.style.display === "block";
+    }
+    div.style.display = "none"; // Hide all contents initially
+  });
 
-      // Update the button visibility and attach event listeners again in case new content affects them
-      updateButtonVisibility();
-    })
-    .catch((error) => {
-      console.error("Failed to load content:", error);
-    });
+  // Only show the content if it was not already visible
+  if (!isContentAlreadyVisible) {
+    const contentToShow = document.getElementById(contentId);
+    if (contentToShow) {
+      contentToShow.style.display = "block";
+    }
+  }
+
+  // Update button visibility based on current content. It might be unnecessary if the content does not dynamically change what is available.
+  updateButtonVisibility();
 }
 
-// Function to update button visibility based on the current content within the #content-area
+// Adjusted function to attach event listeners to buttons. It now calls showContent instead of loadContent.
+function attachEventListenersToButtons() {
+  const buttons = document.querySelectorAll(".right-boxes button");
+  buttons.forEach((button) => {
+    button.addEventListener("click", function () {
+      const contentName = button.id.replace("show", "");
+      showContent(contentName);
+    });
+  });
+}
+
+// Update button visibility logic remains the same
 function updateButtonVisibility() {
   const buttons = document.querySelectorAll(".right-boxes button");
   buttons.forEach((button) => {
     const contentId = button.id.replace("show", "");
     const contentExists =
       document.querySelector(`#content-area #${contentId}`) !== null;
-
-    // Show or hide button based on the existence of the corresponding content
     button.style.display = contentExists ? "inline-block" : "none";
   });
 }
 
-// Function to attach event listeners to each button for loading content
-function attachEventListenersToButtons() {
-  const buttons = document.querySelectorAll(".right-boxes button");
-  buttons.forEach((button) => {
-    button.addEventListener("click", function () {
-      // Extract content name from button id
-      const contentName = button.id.replace("show", "");
-
-      // Hide all content divs
-      document.querySelectorAll("#content-area > div").forEach((div) => {
-        div.style.display = "none";
-      });
-
-      // Load the content corresponding to the clicked button
-      // Note: If the content is already loaded and just needs to be shown, adjust this logic accordingly
-      loadContent(contentName);
-    });
-  });
-}
-
-// Initial setup to attach event listeners and update button visibility
+// Initial setup for attaching event listeners and updating button visibility
 document.addEventListener("DOMContentLoaded", function () {
   attachEventListenersToButtons();
   updateButtonVisibility();
