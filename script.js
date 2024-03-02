@@ -1,74 +1,103 @@
+// script.js
 document.addEventListener("DOMContentLoaded", function () {
-  attachButtonEventListeners();
-  window.addEventListener("popstate", restoreStateFromUrl);
-  restoreStateFromUrl(true); // Initial state restoration with page load flag
-});
+  const contentArea = document.getElementById("content-area");
+  const dropdown = document.getElementById("content-dropdown");
+  const buttons = document.querySelectorAll(".right-boxes button");
 
-function loadContent(contentId, updateHistory = true) {
-  // Check if this content is already loaded to avoid unnecessary updates
-  const isCurrentContent = window.location.hash.includes(
-    `content=${contentId}`
-  );
-  if (!isCurrentContent) {
-    if (updateHistory) {
-      const newState = { content: contentId };
-      history.pushState(newState, "", `#content=${contentId}`);
+  // Create or update hidden state input
+  function updateHiddenState(value) {
+    let hiddenState = contentArea.querySelector(".hidden-state");
+    if (!hiddenState) {
+      hiddenState = document.createElement("input");
+      hiddenState.type = "hidden";
+      hiddenState.className = "hidden-state";
+      contentArea.appendChild(hiddenState);
+    }
+    hiddenState.value = value;
+  }
+
+  // Function to check and display buttons
+  function checkButtons() {
+    buttons.forEach((button) => {
+      const targetId = button.id.replace("show", "");
+      if (document.getElementById(targetId)) {
+        button.style.display = "block";
+      } else {
+        button.style.display = "none";
+      }
+    });
+  }
+
+  // Load content based on dropdown selection
+  function loadContent(value) {
+    // Check if the selected content is already loaded
+    let alreadyLoaded =
+      contentArea.querySelector(".hidden-state") &&
+      contentArea.querySelector(".hidden-state").value === value;
+    if (!alreadyLoaded) {
+      // Simulate loading HTML content (e.g., AJAX request could be used here)
+      contentArea.innerHTML = `<div id="${value}">Content for ${value}.html loaded</div>`;
+      // Update hidden state
+      updateHiddenState(value);
+      // Update the URL to reflect the current state
+      window.history.pushState(
+        { page: value },
+        `${value} - Page`,
+        `?page=${value}`
+      );
     }
 
-    // Simulate fetching content
-    document.getElementById(
-      "content-area"
-    ).innerHTML = `<div>Content for ${contentId} Loaded</div>`;
-    document
-      .getElementById("content-area")
-      .querySelectorAll("div")
-      .forEach((div) => (div.style.display = "none")); // Hide all content including the placeholder
-
-    // Update dropdown selection
-    document.getElementById("content-dropdown").value = contentId;
-
-    updateButtonVisibility();
+    checkButtons();
   }
-}
 
-function showContentById(contentId) {
-  // Logic to show the content by ID, assuming content is already loaded
-  document.querySelectorAll("#content-area > div").forEach((div) => {
-    div.style.display = "none"; // Hide all first
-  });
-  document.getElementById(contentId).style.display = "block"; // Show the selected one
-
-  // No need to update URL hash here for section since we're focusing on content navigation
-}
-
-function updateButtonVisibility() {
-  document.querySelectorAll(".right-boxes button").forEach((button) => {
-    let contentId = button.id.replace("show", "");
-    let contentExists = !!document.getElementById(contentId);
-    button.style.display = contentExists ? "inline-block" : "none";
-  });
-}
-
-function attachButtonEventListeners() {
-  document.querySelectorAll(".right-boxes button").forEach((button) => {
+  // Show specific content and hide others
+  buttons.forEach((button) => {
     button.addEventListener("click", function () {
-      let contentId = this.id.replace("show", "");
-      showContentById(contentId);
+      const targetId = this.id.replace("show", "");
+      contentArea.querySelectorAll("div").forEach((div) => {
+        if (div.id === targetId) {
+          div.style.display = "block";
+          // Update URL to reflect button state
+          const selectedValue = dropdown.value;
+          window.history.pushState(
+            { page: selectedValue, button: targetId },
+            `${selectedValue} - ${targetId} - Page`,
+            `?page=${selectedValue}&button=${targetId}`
+          );
+        } else {
+          div.style.display = "none";
+        }
+      });
     });
   });
-  document
-    .getElementById("content-dropdown")
-    .addEventListener("change", function () {
-      loadContent(this.value);
-    });
-}
 
-function restoreStateFromUrl(initialLoad = false) {
-  const hashParams = new URLSearchParams(window.location.hash.slice(1));
-  if (hashParams.has("content")) {
-    const contentId = hashParams.get("content");
-    loadContent(contentId, !initialLoad); // Update history only if it's not the initial page load
-  } else {
-    // Default content loading logic if no specific content is specified in the URL
+  // Dropdown onchange handler
+  dropdown.addEventListener("change", function () {
+    loadContent(this.value);
+  });
+
+  // Check buttons on load
+  checkButtons();
+
+  // Function to parse URL and set the correct state
+  function parseUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const page = params.get("page");
+    const button = params.get("button");
+
+    if (page) {
+      dropdown.value = page;
+      loadContent(page);
+    }
+
+    if (button) {
+      const buttonElement = document.getElementById(`show${button}`);
+      if (buttonElement) {
+        buttonElement.click();
+      }
+    }
   }
-}
+
+  // Call parseUrl on load to check URL and set the correct state
+  parseUrl();
+});
