@@ -7,8 +7,8 @@ document.addEventListener("DOMContentLoaded", function () {
   hiddenInput.id = "current-content-name";
   contentArea.appendChild(hiddenInput);
 
-  function loadContent(contentName, buttonId = null) {
-    // Update hidden input value
+  // Make loadContent accessible globally by attaching it to the window object
+  window.loadContent = function (contentName, buttonId = null) {
     hiddenInput.value = contentName;
 
     fetch(`${contentName}.html`)
@@ -19,14 +19,13 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((html) => {
         contentArea.innerHTML = html;
         updateButtonVisibility();
-        // Display content associated with button ID, if specified
         displayContentById(buttonId);
         updateURL(contentName, buttonId);
       })
       .catch((error) => {
         console.error("Failed to load content:", error);
       });
-  }
+  };
 
   function updateButtonVisibility() {
     rightBoxes.forEach((button) => {
@@ -54,20 +53,6 @@ document.addEventListener("DOMContentLoaded", function () {
     window.history.pushState({ path: newUrl }, "", newUrl);
   }
 
-  function initContentFromURL() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const contentName = urlParams.get("content");
-    const buttonId = urlParams.get("buttonId");
-
-    if (contentName) {
-      contentDropdown.value = contentName;
-      loadContent(contentName, buttonId);
-    } else {
-      updateButtonVisibility(); // Ensure buttons are shown/hidden based on initial content
-      displayContentById(buttonId); // Display content for the button ID if present
-    }
-  }
-
   rightBoxes.forEach((button) => {
     button.addEventListener("click", function () {
       const buttonId = this.id.replace("show", "");
@@ -77,8 +62,20 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   contentDropdown.addEventListener("change", function () {
-    loadContent(this.value);
+    window.loadContent(this.value);
   });
 
-  initContentFromURL();
+  // Initialize content and state from URL on page load
+  (function initContentFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const contentName = urlParams.get("content");
+    const buttonId = urlParams.get("buttonId");
+
+    if (contentName) {
+      contentDropdown.value = contentName;
+      window.loadContent(contentName, buttonId);
+    } else {
+      updateButtonVisibility();
+    }
+  })();
 });
