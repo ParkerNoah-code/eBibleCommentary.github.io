@@ -2,7 +2,7 @@ function loadContent(contentName) {
   if (!contentName) return; // Do nothing if no content is selected
 
   // Fetch the HTML file based on contentName
-  fetch(`Bible\\${contentName}.html`)
+  fetch(`Bible/${contentName}.html`)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -18,12 +18,16 @@ function loadContent(contentName) {
     });
 }
 
-function showContent(contentId) {
-  // Hide all content first
-  document.querySelectorAll("#content-area > div").forEach(function (content) {
-    content.style.display = "none";
+function show(id) {
+  // Hide all content divs
+  const contentDivs = document.querySelectorAll("#content-area > div");
+  contentDivs.forEach((div) => {
+    div.style.display = "none"; // Hide each div
   });
 
-  // Show the selected content
-  document.getElementById(contentId).style.display = "block";
+  // Show the selected content div
+  const selectedContent = document.getElementById(id);
+  if (selectedContent) {
+    selectedContent.style.display = "block"; // Show the div with the matching id
+  }
 }
