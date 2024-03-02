@@ -5,7 +5,15 @@
 
 <div id="I" style="display: none">
   <script type="text/javascript">
-    loadContent("Gal/Gal");
+    document.addEventListener("DOMContentLoaded", (event) => {
+      // Check if the "I" button exists before adding the event listener
+      const iButton = document.getElementById("showI");
+      if (iButton) {
+        iButton.addEventListener("click", function () {
+          loadContent("Gal/Gal");
+        });
+      }
+    });
   </script>
 </div>
 
