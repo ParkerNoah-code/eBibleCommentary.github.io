@@ -5,31 +5,35 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function loadContent(contentId) {
-  // Update URL hash to reflect the loaded content
+  // Update URL hash to reflect the loaded content file
   window.location.hash = `content=${contentId}`;
-  // Placeholder for actual content loading logic
-  // Simulate fetching and displaying content
+  // Simulate fetching and displaying content for demonstration
+  // You'll need to replace this with actual content loading logic
+  // Assuming the content-area can be directly updated for simplicity
   fetch(contentId + ".html")
     .then((response) => response.text())
     .then((html) => {
       document.getElementById("content-area").innerHTML = html;
       updateButtonVisibility();
+      // After loading new content, reset the displayed section in the URL
+      window.location.hash += `&section=default`;
     })
     .catch((error) => console.error("Error loading the content:", error));
 }
 
 function showContentById(contentId) {
-  // Update URL hash to reflect the shown section
-  window.location.hash = `section=${contentId}`;
-  // Hide all sections first
+  // Assuming all content divs are hidden by default or by previous actions
+  // Show the selected content div
   document.querySelectorAll("#content-area > div").forEach((div) => {
-    div.style.display = "none";
+    div.style.display = "none"; // Hide all first
   });
-  // Show the selected section
-  let content = document.getElementById(contentId);
-  if (content) {
-    content.style.display = "block";
-  }
+  document.getElementById(contentId).style.display = "block"; // Show the selected one
+
+  // Update URL hash to reflect the shown section along with the current content
+  const currentContent = new URLSearchParams(window.location.hash.slice(1)).get(
+    "content"
+  );
+  window.location.hash = `content=${currentContent}&section=${contentId}`;
 }
 
 function updateButtonVisibility() {
@@ -60,7 +64,8 @@ function restoreStateFromUrl() {
   if (hashParams.has("content")) {
     const contentId = hashParams.get("content");
     loadContent(contentId);
-  } else if (hashParams.has("section")) {
+  }
+  if (hashParams.has("section") && hashParams.get("section") !== "default") {
     const sectionId = hashParams.get("section");
     showContentById(sectionId);
   }
