@@ -29,3 +29,8 @@ body {
   background-color: #f2f2f2;
   overflow-y: scroll;
 }
+
+section {
+  padding-left: 10px;
+  padding-right: 10px;
+}
