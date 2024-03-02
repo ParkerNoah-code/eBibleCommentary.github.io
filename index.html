@@ -3,26 +3,40 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dynamic Content</title>
+    <title>eBibleCommentary</title>
     <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
   </head>
+
   <body>
     <div class="top-bar">
       <select id="content-dropdown" onchange="loadContent(this.value)">
         <option value="">Select Content</option>
-        <option value="a">Content A</option>
-        <option value="b">Content B</option>
-        <option value="c">Content C</option>
+        <option value="2Jn">2 John</option>
       </select>
       <div class="right-boxes">
-        <button onclick="alert('Box 1 clicked')">Box 1</button>
-        <button onclick="alert('Box 2 clicked')">Box 2</button>
-        <button onclick="alert('Box 3 clicked')">Box 3</button>
+        <button
+          data-content-id="H"
+          onclick="showContent(this.getAttribute('data-content-id'))"
+        >
+          H
+        </button>
+        <button
+          data-content-id="C"
+          onclick="showContent(this.getAttribute('data-content-id'))"
+        >
+          C
+        </button>
+        <button
+          data-content-id="T"
+          onclick="showContent(this.getAttribute('data-content-id'))"
+        >
+          T
+        </button>
       </div>
     </div>
     <div id="content-area">
       <!-- Dynamic content will be loaded here -->
     </div>
-    <script src="script.js"></script>
   </body>
 </html>

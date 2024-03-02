@@ -13,3 +13,9 @@
 #content-area {
   margin-top: 20px;
 }
+
+.container {
+  max-width: 750px; /* Maximum width of the page */
+  margin: 0 auto; /* Center the page horizontally */
+  background-color: rgb(223, 223, 223);
+}
