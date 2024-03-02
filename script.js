@@ -15,11 +15,36 @@ function loadContent(contentName) {
 
       // Update the button visibility based on the new content
       updateButtonVisibility();
+
+      // Re-attach event listeners to buttons
+      attachEventListenersToButtons();
     })
     .catch((error) => {
       console.error("Failed to load content:", error);
     });
 }
+
+function attachEventListenersToButtons() {
+  const buttons = document.querySelectorAll(".right-boxes button");
+  buttons.forEach((button) => {
+    button.removeEventListener("click", toggleContentVisibility); // Prevent duplicate listeners
+    button.addEventListener("click", toggleContentVisibility);
+  });
+}
+
+function toggleContentVisibility(event) {
+  const buttonId = event.target.id; // Get the ID of the clicked button
+  const contentId = buttonId.replace("show", ""); // Determine the corresponding content ID
+
+  // Toggle the visibility of the corresponding content
+  const content = document.getElementById(contentId);
+  if (content) {
+    content.style.display = content.style.display === "none" ? "block" : "none";
+  }
+}
+
+// Attach event listeners when the document is initially loaded
+document.addEventListener("DOMContentLoaded", attachEventListenersToButtons);
 
 function updateButtonVisibility() {
   // Get all buttons within the right-boxes container
