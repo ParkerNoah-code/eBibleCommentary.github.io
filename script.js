@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!contentName) return; // Do nothing if no content is selected
 
     // Fetch the HTML file based on contentName
-    fetch(`Bible/${contentName}.html`)
+    fetch(`${contentName}.html`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
