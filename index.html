@@ -5,23 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>eBibleCommentary</title>
     <link rel="stylesheet" href="style.css" />
-    <script src="script.js"></script>
   </head>
 
   <body>
-    <div class="top-bar">
-      <select id="content-dropdown" onchange="loadContent(this.value)">
-        <option value="">Select Content</option>
-        <option value="2Jn">2 John</option>
-      </select>
-      <div class="right-boxes">
-        <button onclick="show('H')">H</button>
-        <button onclick="show('C')">C</button>
-        <button onclick="show('E')">E</button>
+    <div class="container">
+      <div class="top-bar">
+        <select id="content-dropdown" onchange="loadContent(this.value)">
+          <option value="">Select Content</option>
+          <option value="2Jn">2 John</option>
+        </select>
+        <div class="right-boxes">
+          <button id="showH">H</button>
+          <button id="showC">C</button>
+          <button id="showE">E</button>
+        </div>
+      </div>
+      <div id="content-area">
+        <!-- Dynamic content will be loaded here -->
       </div>
     </div>
-    <div id="content-area">
-      <!-- Dynamic content will be loaded here -->
-    </div>
+    <script src="script.js" defer></script>
   </body>
 </html>

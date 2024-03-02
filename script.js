@@ -31,3 +31,9 @@ function show(id) {
     selectedContent.style.display = "block"; // Show the div with the matching id
   }
 }
+
+document.addEventListener("DOMContentLoaded", (event) => {
+  document.getElementById("showH").addEventListener("click", () => show("H"));
+  document.getElementById("showC").addEventListener("click", () => show("C"));
+  document.getElementById("showE").addEventListener("click", () => show("E"));
+});
