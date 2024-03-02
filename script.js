@@ -1,12 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
   updateButtonVisibility();
   attachButtonEventListeners();
+  restoreStateFromUrl();
 });
 
 function loadContent(contentId) {
-  // Assuming you have a function to load the content dynamically
-  // You can use AJAX or Fetch API to load content from "About.html", "Book1.html", etc.
-  // After loading the content, you should call `updateButtonVisibility()` to update button states
+  // Update URL hash to reflect the loaded content
+  window.location.hash = `content=${contentId}`;
+  // Placeholder for actual content loading logic
+  // Simulate fetching and displaying content
   fetch(contentId + ".html")
     .then((response) => response.text())
     .then((html) => {
@@ -16,14 +18,24 @@ function loadContent(contentId) {
     .catch((error) => console.error("Error loading the content:", error));
 }
 
+function showContentById(contentId) {
+  // Update URL hash to reflect the shown section
+  window.location.hash = `section=${contentId}`;
+  // Hide all sections first
+  document.querySelectorAll("#content-area > div").forEach((div) => {
+    div.style.display = "none";
+  });
+  // Show the selected section
+  let content = document.getElementById(contentId);
+  if (content) {
+    content.style.display = "block";
+  }
+}
+
 function updateButtonVisibility() {
-  // Query all buttons within .right-boxes
   document.querySelectorAll(".right-boxes button").forEach((button) => {
-    // Extract ID from button's ID attribute
     let contentId = button.id.replace("show", "");
-    // Check if an element with the corresponding ID exists within #content-area
     let contentExists = !!document.getElementById(contentId);
-    // Show button if content exists, otherwise hide
     button.style.display = contentExists ? "inline-block" : "none";
   });
 }
@@ -37,21 +49,23 @@ function attachButtonEventListeners() {
   });
 }
 
-function showContentById(contentId) {
-  // Hide all content first
-  document.querySelectorAll("#content-area > div").forEach((div) => {
-    div.style.display = "none";
-  });
-  // Show the selected content
-  let content = document.getElementById(contentId);
-  if (content) {
-    content.style.display = "block";
-  }
-}
-
-// Optional: If the dropdown change should also trigger content loading dynamically
 document
   .getElementById("content-dropdown")
   .addEventListener("change", function () {
     loadContent(this.value);
   });
+
+function restoreStateFromUrl() {
+  const hashParams = new URLSearchParams(window.location.hash.slice(1));
+  if (hashParams.has("content")) {
+    const contentId = hashParams.get("content");
+    loadContent(contentId);
+  } else if (hashParams.has("section")) {
+    const sectionId = hashParams.get("section");
+    showContentById(sectionId);
+  }
+}
+
+window.addEventListener("hashchange", function () {
+  restoreStateFromUrl();
+});
