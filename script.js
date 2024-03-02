@@ -29,6 +29,26 @@ function show(id) {
   const selectedContent = document.getElementById(id);
   if (selectedContent) {
     selectedContent.style.display = "block"; // Show the div with the matching id
+
+    // Execute scripts within the selected content, if any
+    const scripts = selectedContent.getElementsByTagName("script");
+    for (let script of scripts) {
+      // Create a new script element
+      const newScript = document.createElement("script");
+
+      // Copy the script code or src from the original script
+      if (script.src) {
+        newScript.src = script.src;
+      } else {
+        newScript.textContent = script.textContent;
+      }
+
+      // Append the new script to the document head to execute it
+      document.head.appendChild(newScript);
+
+      // Remove the new script element after execution as a cleanup step
+      document.head.removeChild(newScript);
+    }
   }
 }
 
