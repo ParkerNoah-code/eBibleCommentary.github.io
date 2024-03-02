@@ -1,56 +1,44 @@
 document.addEventListener("DOMContentLoaded", function () {
-  updateButtonVisibility();
-  restoreStateFromUrl();
   attachButtonEventListeners();
+  window.addEventListener("popstate", restoreStateFromUrl);
+  restoreStateFromUrl(true); // Initial state restoration with page load flag
 });
 
-let currentContent = ""; // Track the currently loaded content for efficiency
-
-function loadContent(contentId, preventDuplicate = true) {
-  if (!preventDuplicate || currentContent !== contentId) {
-    currentContent = contentId; // Update the current content tracker
-
-    // Update the dropdown selection if it's different
-    const dropdown = document.getElementById("content-dropdown");
-    if (dropdown.value !== contentId) {
-      dropdown.value = contentId;
+function loadContent(contentId, updateHistory = true) {
+  // Check if this content is already loaded to avoid unnecessary updates
+  const isCurrentContent = window.location.hash.includes(
+    `content=${contentId}`
+  );
+  if (!isCurrentContent) {
+    if (updateHistory) {
+      const newState = { content: contentId };
+      history.pushState(newState, "", `#content=${contentId}`);
     }
 
-    // Update URL with the selected option and reset button state to 'default'
-    // Use history.pushState to manage history without causing a page reload
-    const newState = { content: contentId, section: "default" };
-    history.pushState(newState, "", `#content=${contentId}&section=default`);
+    // Simulate fetching content
+    document.getElementById(
+      "content-area"
+    ).innerHTML = `<div>Content for ${contentId} Loaded</div>`;
+    document
+      .getElementById("content-area")
+      .querySelectorAll("div")
+      .forEach((div) => (div.style.display = "none")); // Hide all content including the placeholder
 
-    // Placeholder for actual fetching logic
-    fetch(contentId + ".html")
-      .then((response) => response.text())
-      .then((html) => {
-        document.getElementById("content-area").innerHTML =
-          html + `<div>Loaded: ${contentId}</div>`; // Note indicating loaded content
-        updateButtonVisibility();
-        // After content is loaded, check if a specific section needs to be shown
-        restoreSectionState();
-      })
-      .catch((error) => console.error("Error loading the content:", error));
+    // Update dropdown selection
+    document.getElementById("content-dropdown").value = contentId;
+
+    updateButtonVisibility();
   }
 }
 
 function showContentById(contentId) {
+  // Logic to show the content by ID, assuming content is already loaded
   document.querySelectorAll("#content-area > div").forEach((div) => {
-    div.style.display = "none";
+    div.style.display = "none"; // Hide all first
   });
-  const sectionToShow = document.getElementById(contentId);
-  if (sectionToShow) {
-    sectionToShow.style.display = "block";
-  }
+  document.getElementById(contentId).style.display = "block"; // Show the selected one
 
-  // Update the URL to reflect the new section, keeping the content part unchanged
-  const newState = { content: currentContent, section: contentId };
-  history.pushState(
-    newState,
-    "",
-    `#content=${currentContent}&section=${contentId}`
-  );
+  // No need to update URL hash here for section since we're focusing on content navigation
 }
 
 function updateButtonVisibility() {
@@ -68,37 +56,19 @@ function attachButtonEventListeners() {
       showContentById(contentId);
     });
   });
+  document
+    .getElementById("content-dropdown")
+    .addEventListener("change", function () {
+      loadContent(this.value);
+    });
 }
 
-document
-  .getElementById("content-dropdown")
-  .addEventListener("change", function () {
-    loadContent(this.value, false);
-  });
-
-window.onpopstate = function (event) {
-  if (event.state) {
-    currentContent = ""; // Reset current content to ensure the content is reloaded
-    restoreStateFromUrl();
-  }
-};
-
-function restoreStateFromUrl() {
+function restoreStateFromUrl(initialLoad = false) {
   const hashParams = new URLSearchParams(window.location.hash.slice(1));
   if (hashParams.has("content")) {
     const contentId = hashParams.get("content");
-    loadContent(contentId, false); // Load content without preventing duplicates to ensure state updates
-  }
-  if (hashParams.has("section") && hashParams.get("section") !== "default") {
-    const sectionId = hashParams.get("section");
-    showContentById(sectionId);
-  }
-}
-
-function restoreSectionState() {
-  const hashParams = new URLSearchParams(window.location.hash.slice(1));
-  if (hashParams.has("section") && hashParams.get("section") !== "default") {
-    const sectionId = hashParams.get("section");
-    showContentById(sectionId);
+    loadContent(contentId, !initialLoad); // Update history only if it's not the initial page load
+  } else {
+    // Default content loading logic if no specific content is specified in the URL
   }
 }
