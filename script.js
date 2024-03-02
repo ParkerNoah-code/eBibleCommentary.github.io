@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
   // Check and update button visibility based on the existence of their respective content divs
   function updateButtonVisibility() {
-    const ids = ["I", "T", "C", "H", "B"];
+    const ids = ["I", "T", "C", "H", "B", "G"];
 
     ids.forEach((id) => {
       const contentExists = document.getElementById(id) !== null;
