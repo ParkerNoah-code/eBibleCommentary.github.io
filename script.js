@@ -4,36 +4,48 @@ document.addEventListener("DOMContentLoaded", function () {
   restoreStateFromUrl();
 });
 
+let currentContent = ""; // Track the currently loaded content
+
 function loadContent(contentId) {
-  // Update URL hash to reflect the loaded content file
-  window.location.hash = `content=${contentId}`;
-  // Simulate fetching and displaying content for demonstration
-  // You'll need to replace this with actual content loading logic
-  // Assuming the content-area can be directly updated for simplicity
-  fetch(contentId + ".html")
-    .then((response) => response.text())
-    .then((html) => {
-      document.getElementById("content-area").innerHTML = html;
-      updateButtonVisibility();
-      // After loading new content, reset the displayed section in the URL
-      window.location.hash += `&section=default`;
-    })
-    .catch((error) => console.error("Error loading the content:", error));
+  // Check if the content is already loaded to avoid unnecessary fetches
+  if (currentContent !== contentId) {
+    currentContent = contentId; // Update the current content tracker
+    // Update URL with the selected option and reset button state to 'default'
+    window.location.hash = `content=${contentId}&section=default`;
+
+    // Placeholder for actual fetching logic
+    // Replace this with your content loading implementation
+    fetch(contentId + ".html")
+      .then((response) => response.text())
+      .then((html) => {
+        document.getElementById("content-area").innerHTML =
+          html + `<div>Loaded: ${contentId}</div>`; // Note indicating loaded content
+        updateButtonVisibility();
+      })
+      .catch((error) => console.error("Error loading the content:", error));
+  }
 }
 
 function showContentById(contentId) {
-  // Assuming all content divs are hidden by default or by previous actions
-  // Show the selected content div
-  document.querySelectorAll("#content-area > div").forEach((div) => {
-    div.style.display = "none"; // Hide all first
-  });
-  document.getElementById(contentId).style.display = "block"; // Show the selected one
+  // Only proceed if a different section is selected
+  if (
+    new URLSearchParams(window.location.hash.slice(1)).get("section") !==
+    contentId
+  ) {
+    // Update the URL to reflect the new section, keeping the content part unchanged
+    const hashParams = new URLSearchParams(window.location.hash.slice(1));
+    hashParams.set("section", contentId);
+    window.location.hash = hashParams.toString();
 
-  // Update URL hash to reflect the shown section along with the current content
-  const currentContent = new URLSearchParams(window.location.hash.slice(1)).get(
-    "content"
-  );
-  window.location.hash = `content=${currentContent}&section=${contentId}`;
+    // Show the selected section
+    document.querySelectorAll("#content-area > div").forEach((div) => {
+      div.style.display = "none";
+    });
+    const sectionToShow = document.getElementById(contentId);
+    if (sectionToShow) {
+      sectionToShow.style.display = "block";
+    }
+  }
 }
 
 function updateButtonVisibility() {
@@ -70,7 +82,3 @@ function restoreStateFromUrl() {
     showContentById(sectionId);
   }
 }
-
-window.addEventListener("hashchange", function () {
-  restoreStateFromUrl();
-});
