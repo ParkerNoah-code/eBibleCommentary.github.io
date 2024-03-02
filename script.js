@@ -1,59 +1,93 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
   const contentArea = document.getElementById("content-area");
-  const dropdown = document.getElementById("content-dropdown");
+  const contentDropdown = document.getElementById("content-dropdown");
+  const rightBoxes = document.querySelectorAll(".right-boxes button");
+  const hiddenInput = document.createElement("input");
+  hiddenInput.type = "hidden";
+  hiddenInput.id = "current-content";
+  contentArea.appendChild(hiddenInput);
 
-  // Function to load content based on the dropdown selection or URL parameter
+  // Dynamically load content and manage button visibility
   function loadContent(contentName) {
-    if (!contentName) return; // Do nothing if no content is selected
+    if (!contentName) return;
 
-    // Fetch the HTML file based on contentName
-    fetch(`${contentName}.html`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.text();
-      })
-      .then((html) => {
-        // Inject the fetched HTML into the content area
-        contentArea.innerHTML = html;
-        updateButtonVisibility();
-        updateURLState(contentName);
-      })
-      .catch((error) => {
-        console.error("Failed to load content:", error);
-      });
-  }
-
-  // Update button visibility based on the content in the content-area
-  function updateButtonVisibility() {
-    document.querySelectorAll(".right-boxes button").forEach((button) => {
-      const contentId = button.id.replace("show", "");
-      button.style.display = document.getElementById(contentId) ? "" : "none";
-    });
-  }
-
-  // Update the browser's URL without reloading the page
-  function updateURLState(contentName) {
-    history.pushState({ contentName }, "", `?content=${contentName}`);
-  }
-
-  // Initialize content based on URL parameters
-  function initContentFromURL() {
-    const params = new URLSearchParams(window.location.search);
-    const contentName = params.get("content");
-    if (contentName) {
-      dropdown.value = contentName;
-      loadContent(contentName);
+    // Check if content needs to be reloaded
+    if (hiddenInput.value !== contentName) {
+      fetch(`${contentName}.html`)
+        .then((response) => {
+          if (!response.ok) throw new Error("Network response was not ok");
+          return response.text();
+        })
+        .then((html) => {
+          contentArea.innerHTML = html + contentArea.innerHTML; // Keep hidden input
+          hiddenInput.value = contentName;
+          updateButtonVisibility();
+          updateURL(contentName);
+        })
+        .catch((error) => {
+          console.error("Failed to load content:", error);
+        });
     }
   }
 
-  // Dropdown change event listener
-  dropdown.addEventListener("change", (event) => {
-    loadContent(event.target.value);
+  // Update button visibility based on available content IDs
+  function updateButtonVisibility() {
+    rightBoxes.forEach((button) => {
+      const contentId = button.id.replace("show", "");
+      document.getElementById(contentId)
+        ? (button.style.display = "")
+        : (button.style.display = "none");
+    });
+  }
+
+  // Single content display management
+  rightBoxes.forEach((button) => {
+    button.addEventListener("click", function () {
+      const contentId = this.id.replace("show", "");
+      const content = document.getElementById(contentId);
+      if (content) {
+        // Hide all content except the clicked one
+        contentArea.childNodes.forEach((child) => {
+          if (child.id && child.id !== "current-content") {
+            child.style.display = child.id === contentId ? "" : "none";
+          }
+        });
+        updateURL(hiddenInput.value, contentId);
+      }
+    });
   });
 
-  // Initialize content and button visibility on page load
+  // URL state management
+  function updateURL(contentName, contentId = "") {
+    const newUrl = `${window.location.pathname}?content=${contentName}${
+      contentId ? `&id=${contentId}` : ""
+    }`;
+    window.history.pushState({ path: newUrl }, "", newUrl);
+  }
+
+  // URL parsing and content initialization
+  function initContentFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const contentName = urlParams.get("content");
+    const contentId = urlParams.get("id");
+
+    if (contentName) {
+      contentDropdown.value = contentName;
+      loadContent(contentName);
+
+      if (contentId) {
+        const content = document.getElementById(contentId);
+        if (content) {
+          content.style.display = "";
+        }
+      }
+    }
+  }
+
+  // Listen to dropdown changes
+  contentDropdown.addEventListener("change", function () {
+    loadContent(this.value);
+  });
+
   initContentFromURL();
-  updateButtonVisibility();
 });
