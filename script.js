@@ -21,63 +21,22 @@ function loadContent(contentName) {
     });
 }
 
-document.addEventListener("DOMContentLoaded", (event) => {
-  // Function to show the selected content div
-  function show(id) {
-    // Hide all content divs
-    const contentDivs = document.querySelectorAll("#content-area > div");
-    contentDivs.forEach((div) => {
-      div.style.display = "none"; // Hide each div
-    });
+function updateButtonVisibility() {
+  // Get all buttons within the right-boxes container
+  const buttons = document.querySelectorAll(".right-boxes button");
 
-    // Show the selected content div
-    const selectedContent = document.getElementById(id);
-    if (selectedContent) {
-      selectedContent.style.display = "block"; // Show the div with the matching id
+  buttons.forEach((button) => {
+    // Extract the content id from the button id (e.g., 'showI' => 'I')
+    const contentId = button.id.replace("show", "");
 
-      // Execute scripts within the selected content, if any
-      const scripts = selectedContent.getElementsByTagName("script");
-      for (let script of scripts) {
-        // Create a new script element
-        const newScript = document.createElement("script");
+    // Check if there is an element with the corresponding id within the content-area
+    const contentExists =
+      document.querySelector(`#content-area #${contentId}`) !== null;
 
-        // Copy the script code or src from the original script
-        if (script.src) {
-          newScript.src = script.src;
-        } else {
-          newScript.textContent = script.textContent;
-        }
+    // Show the button if the corresponding content exists, otherwise hide it
+    button.style.display = contentExists ? "inline-block" : "none";
+  });
+}
 
-        // Append the new script to the document head to execute it
-        document.head.appendChild(newScript);
-
-        // Remove the new script element after execution as a cleanup step
-        document.head.removeChild(newScript);
-      }
-    }
-  }
-
-  // Check and update button visibility based on the existence of their respective content divs
-  function updateButtonVisibility() {
-    const ids = ["I", "T", "C", "H", "B", "G"];
-
-    ids.forEach((id) => {
-      const contentExists = document.getElementById(id) !== null;
-      const button = document.getElementById(`show${id}`);
-      if (button) {
-        // Ensure the button element was successfully selected
-        if (contentExists) {
-          // Show button and attach event listener if content exists
-          button.style.display = "inline-block";
-          button.onclick = () => show(id); // Using onclick for better compatibility
-        } else {
-          // Hide button if content does not exist
-          button.style.display = "none";
-        }
-      }
-    });
-  }
-
-  // Initial check to update button visibility
-  updateButtonVisibility();
-});
+// Initial update to set the correct visibility state for all buttons
+document.addEventListener("DOMContentLoaded", updateButtonVisibility);
