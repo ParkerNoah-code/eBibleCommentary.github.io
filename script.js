@@ -9,25 +9,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Dynamically load content and manage button visibility
   function loadContent(contentName) {
-    if (!contentName) return;
-
-    // Check if content needs to be reloaded
-    if (hiddenInput.value !== contentName) {
-      fetch(`${contentName}.html`)
-        .then((response) => {
-          if (!response.ok) throw new Error("Network response was not ok");
-          return response.text();
-        })
-        .then((html) => {
-          contentArea.innerHTML = html + contentArea.innerHTML; // Keep hidden input
-          hiddenInput.value = contentName;
-          updateButtonVisibility();
-          updateURL(contentName);
-        })
-        .catch((error) => {
-          console.error("Failed to load content:", error);
-        });
+    // If the selected content is already loaded, only update button visibility
+    if (hiddenInput.value === contentName) {
+      updateButtonVisibility();
+      return;
     }
+
+    // Clear existing content and load new content
+    contentArea.innerHTML = ""; // Clear the content area
+    contentArea.appendChild(hiddenInput); // Re-add the hidden input to the content area
+    fetch(`${contentName}.html`)
+      .then((response) => {
+        if (!response.ok) throw new Error("Network response was not ok");
+        return response.text();
+      })
+      .then((html) => {
+        contentArea.innerHTML = html; // Load new content
+        hiddenInput.value = contentName; // Update the hidden value
+        updateButtonVisibility();
+        updateURL(contentName);
+      })
+      .catch((error) => {
+        console.error("Failed to load content:", error);
+      });
   }
 
   // Update button visibility based on available content IDs
@@ -39,23 +43,6 @@ document.addEventListener("DOMContentLoaded", function () {
         : (button.style.display = "none");
     });
   }
-
-  // Single content display management
-  rightBoxes.forEach((button) => {
-    button.addEventListener("click", function () {
-      const contentId = this.id.replace("show", "");
-      const content = document.getElementById(contentId);
-      if (content) {
-        // Hide all content except the clicked one
-        contentArea.childNodes.forEach((child) => {
-          if (child.id && child.id !== "current-content") {
-            child.style.display = child.id === contentId ? "" : "none";
-          }
-        });
-        updateURL(hiddenInput.value, contentId);
-      }
-    });
-  });
 
   // URL state management
   function updateURL(contentName, contentId = "") {
@@ -74,12 +61,16 @@ document.addEventListener("DOMContentLoaded", function () {
     if (contentName) {
       contentDropdown.value = contentName;
       loadContent(contentName);
+    } else {
+      // No specific content requested, check button visibility based on initial content
+      hiddenInput.value = ""; // Ensure hidden input is reset for initial state
+      updateButtonVisibility();
+    }
 
-      if (contentId) {
-        const content = document.getElementById(contentId);
-        if (content) {
-          content.style.display = "";
-        }
+    if (contentId) {
+      const content = document.getElementById(contentId);
+      if (content) {
+        content.style.display = "";
       }
     }
   }
