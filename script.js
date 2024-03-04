@@ -54,27 +54,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   rightBoxes.forEach((button) => {
     button.addEventListener("click", function () {
-      const contentName = this.getAttribute("navigate");
-      const buttonId = this.id.replace("show", "");
-
-      if (contentName) {
-        window.loadContent(contentName, buttonId);
+      const navigateValue = this.getAttribute("navigate");
+      if (navigateValue) {
+        window.loadContent(navigateValue);
       } else {
+        const buttonId = this.id.replace("show", "");
         displayContentById(buttonId);
+        updateURL(hiddenInput.value, buttonId);
       }
-      updateURL(hiddenInput.value, buttonId);
-    });
-  });
-
-  contentDropdown.addEventListener("change", function () {
-    window.loadContent(this.value);
-  });
-
-  rightBoxes.forEach((button) => {
-    button.addEventListener("click", function () {
-      const buttonId = this.id.replace("show", "");
-      displayContentById(buttonId);
-      updateURL(hiddenInput.value, buttonId);
     });
   });
 
