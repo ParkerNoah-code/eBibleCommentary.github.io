@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // Accessing essential DOM elements
   const contentArea = document.getElementById("content-area");
   const contentDropdown = document.getElementById("content-dropdown");
   const rightBoxes = document.querySelectorAll(".right-boxes button");
@@ -7,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
   hiddenInput.id = "current-content-name";
   contentArea.appendChild(hiddenInput);
 
+  // Function to load content based on the contentName and optionally a displayId
   window.loadContent = function (contentName, displayId = null) {
     hiddenInput.value = contentName;
 
@@ -21,14 +23,17 @@ document.addEventListener("DOMContentLoaded", function () {
         if (displayId) {
           // Display content by the specified id if provided
           displayContentById(displayId);
+        } else {
+          // Update without specifying a displayId
+          updateURL(contentName);
         }
-        updateURL(contentName, displayId);
       })
       .catch((error) => {
         console.error("Failed to load content:", error);
       });
   };
 
+  // Updates the visibility of buttons based on content availability
   function updateButtonVisibility() {
     rightBoxes.forEach((button) => {
       const contentId = button.id.replace("show", "");
@@ -40,6 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // Displays content by id
   function displayContentById(buttonId) {
     const contentDivs = contentArea.querySelectorAll("div");
     contentDivs.forEach((div) => {
@@ -47,14 +53,17 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  function updateURL(contentName, displayId) {
+  // Updates the URL based on contentName and optionally a buttonId/displayId
+  function updateURL(contentName, displayId = null) {
     let newPath = `${window.location.pathname}?content=${contentName}`;
     if (displayId) {
+      // Update the path with displayId if provided
       newPath += `&buttonId=${displayId}`;
     }
     window.history.pushState({ path: newPath }, "", newPath);
   }
 
+  // Event listeners for right box buttons to handle custom navigation and display
   rightBoxes.forEach((button) => {
     button.addEventListener("click", function () {
       const buttonId = this.id.replace("show", "");
@@ -63,8 +72,10 @@ document.addEventListener("DOMContentLoaded", function () {
       const displayId = targetDiv?.getAttribute("display-id");
 
       if (navigateAttribute) {
+        // Load content based on navigate attribute, and optionally display content by displayId
         window.loadContent(navigateAttribute, displayId);
       } else {
+        // Default functionality if 'navigate' and 'display-id' attributes do not exist
         displayContentById(buttonId);
         updateURL(hiddenInput.value, buttonId);
       }
@@ -75,25 +86,17 @@ document.addEventListener("DOMContentLoaded", function () {
     window.loadContent(this.value);
   });
 
-  function initContentFromURL() {
+  // Initializes content based on URL parameters
+  (function initContentFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
-    const contentNameFromURL = urlParams.get("content");
-    const buttonIdFromURL = urlParams.get("buttonId");
+    const contentName = urlParams.get("content");
+    const buttonId = urlParams.get("buttonId");
 
-    if (contentNameFromURL && hiddenInput.value !== contentNameFromURL) {
-      window.loadContent(contentNameFromURL, buttonIdFromURL);
-    } else if (hiddenInput.value) {
-      // Load content from the hidden value if it doesn't match the URL parameter
-      window.loadContent(hiddenInput.value, buttonIdFromURL);
+    if (contentName) {
+      contentDropdown.value = contentName;
+      window.loadContent(contentName, buttonId);
+    } else {
+      updateButtonVisibility();
     }
-    contentDropdown.value = contentNameFromURL || hiddenInput.value;
-  }
-
-  // Initialize content based on URL parameters
-  initContentFromURL();
-
-  // Handle browser navigation events (back and forward button presses)
-  window.addEventListener("popstate", function () {
-    initContentFromURL();
-  });
+  })();
 });
