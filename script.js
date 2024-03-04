@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
   hiddenInput.id = "current-content-name";
   contentArea.appendChild(hiddenInput);
 
-  // Make loadContent accessible globally by attaching it to the window object
   window.loadContent = function (contentName, buttonId = null) {
     hiddenInput.value = contentName;
 
@@ -65,7 +64,6 @@ document.addEventListener("DOMContentLoaded", function () {
     window.loadContent(this.value);
   });
 
-  // Initialize content and state from URL on page load
   (function initContentFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
     const contentName = urlParams.get("content");
