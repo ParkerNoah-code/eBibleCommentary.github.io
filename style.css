@@ -1,7 +1,7 @@
 .top-bar {
   display: flex;
   justify-content: space-between;
-  padding: 10px;
+  padding: 5px;
   background-color: #333;
   color: white;
 }
@@ -11,8 +11,17 @@
   overflow-y: auto;
 }
 
+.right-boxes {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
 .right-boxes button {
-  margin-left: 10px;
+  padding: 5px 10px;
+  font-size: 12px;
+  margin-left: 5px;
+  min-width: 30px;
+  text-align: center;
 }
 
 .container {
