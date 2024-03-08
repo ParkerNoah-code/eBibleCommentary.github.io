@@ -1,8 +1,8 @@
-/* Assuming .container wraps both .top-bar and the main content */
 .container {
-  max-width: 750px; /* or your desired width */
-  margin: 0 auto; /* Center the container */
-  position: relative; /* Context for absolute positioning */
+  max-width: 750px;
+  margin: 0 auto;
+  margin-bottom: 0;
+  background-color: rgb(223, 223, 223);
 }
 
 .top-bar {
@@ -11,43 +11,46 @@
   padding: 5px;
   background-color: #333;
   color: white;
-  position: absolute; /* Change from fixed to absolute */
+  position: fixed;
   top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 20px); /* Adjust based on the body's padding */
+  max-width: 750px; /* Matches the container's max-width */
+  z-index: 100; /* Ensures it is above other content */
 }
 
-/* Add padding to body to prevent top-bar overlap */
-body {
-  font-family: "Times New Roman";
-  font-size: 16px;
-  margin: 0;
-  padding-top: 40px; /* Adjust based on the actual height of .top-bar */
-  padding-left: 10px;
-  padding-right: 10px;
-  background-color: #f2f2f2;
-  overflow-y: scroll;
-}
-
-#content-dropdown,
-.right-boxes button {
-  padding: 2px 5px; /* Reduce padding for compactness */
-  font-size: 10px; /* Adjust font size for compactness */
-  height: auto; /* Allow height to adjust based on content, or set a specific compact height */
-  min-height: 20px; /* Optional: Ensure a minimum height for better visibility */
-}
-
-.right-boxes button {
-  margin-left: 5px;
-  min-width: 30px; /* Adjust based on content or preference for compactness */
-  text-align: center;
+#content-area,
+#content-dropdown {
+  padding-top: 60px; /* Adjust this value based on the top-bar's height */
 }
 
 #content-dropdown {
   max-height: 150px;
   overflow-y: auto;
-  /* Ensure dropdown height is controlled by height property, not max-height */
+}
+
+.right-boxes {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.right-boxes button {
+  padding: 5px 10px;
+  font-size: 12px;
+  margin-left: 5px;
+  min-width: 30px;
+  text-align: center;
+}
+
+body {
+  font-family: "Times New Roman";
+  font-size: 16px;
+  margin: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #f2f2f2;
+  overflow-y: scroll;
 }
 
 section {
