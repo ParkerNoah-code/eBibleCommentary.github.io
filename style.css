@@ -2,6 +2,8 @@
   display: flex;
   justify-content: space-between;
   padding: 5px;
+  position: fixed;
+  top: 0;
   background-color: #333;
   color: white;
 }
@@ -12,13 +14,11 @@
 }
 
 .right-boxes {
-  display: flex;
   flex-wrap: nowrap;
 }
 
 .right-boxes button {
-  padding: 5px 10px;
-  font-size: 12px;
+  padding: 5px;
   margin-left: 5px;
   text-align: center;
 }
