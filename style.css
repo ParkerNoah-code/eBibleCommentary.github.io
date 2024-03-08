@@ -14,6 +14,7 @@
 .right-boxes {
   display: flex;
   flex-wrap: nowrap;
+  justify-content: center;
   align-items: center;
 }
 
@@ -21,7 +22,7 @@
   padding: 5px 10px;
   font-size: 12px;
   margin-left: 5px;
-  width: 10px;
+  width: 8px;
   height: 15px;
   text-align: center;
 }
