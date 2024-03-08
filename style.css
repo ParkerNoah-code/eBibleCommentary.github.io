@@ -14,6 +14,10 @@
   overflow-y: auto;
 }
 
+#content-area {
+  padding-top: 60px;
+}
+
 .right-boxes {
   display: flex;
   flex-wrap: nowrap;
