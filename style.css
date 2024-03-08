@@ -6,11 +6,27 @@
   color: white;
   position: fixed;
   top: 0;
+  left: 0; /* Ensure the bar starts from the far left */
+  right: 0; /* Stretch the bar to the far right */
+  z-index: 1000; /* Ensure top-bar stays on top of other content */
 }
 
-#content-dropdown {
-  max-height: 150px;
-  overflow-y: auto;
+/* Add padding to body to prevent top-bar overlap */
+body {
+  font-family: "Times New Roman";
+  font-size: 16px;
+  margin: 0;
+  padding-top: 40px; /* Adjust based on the actual height of .top-bar */
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #f2f2f2;
+  overflow-y: scroll;
+}
+
+#content-dropdown,
+.right-boxes button {
+  height: 40px; /* Set a fixed height for both dropdown and buttons */
+  line-height: 40px; /* Align text vertically in the center */
 }
 
 .right-boxes {
@@ -24,6 +40,7 @@
   margin-left: 5px;
   min-width: 30px;
   text-align: center;
+  /* Remove specific height setting if it was here, use class level setting instead */
 }
 
 .container {
@@ -33,14 +50,10 @@
   background-color: rgb(223, 223, 223);
 }
 
-body {
-  font-family: "Times New Roman";
-  font-size: 16px;
-  margin: 0;
-  padding-left: 10px;
-  padding-right: 10px;
-  background-color: #f2f2f2;
-  overflow-y: scroll;
+#content-dropdown {
+  max-height: 150px;
+  overflow-y: auto;
+  /* Ensure dropdown height is controlled by height property, not max-height */
 }
 
 section {
