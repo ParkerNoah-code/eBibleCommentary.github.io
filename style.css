@@ -7,15 +7,18 @@
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: 1000; /* Ensure top-bar stays above all content */
 }
 
 #content-dropdown {
   max-height: 150px;
   overflow-y: auto;
+  /* Ensure dropdown has a specified height to match the button heights, including padding */
+  height: 40px; /* Example height, adjust based on your design */
 }
 
 #content-area {
-  padding-top: 60px;
+  padding-top: 60px; /* Adjust this value if the .top-bar height changes */
 }
 
 .right-boxes {
@@ -29,6 +32,10 @@
   margin-left: 5px;
   min-width: 30px;
   text-align: center;
+  height: 40px; /* Match the height of the dropdown to keep the top-bar consistent */
+  display: flex;
+  align-items: center; /* Centers button text vertically */
+  justify-content: center; /* Centers button text horizontally */
 }
 
 .container {
