@@ -1,14 +1,21 @@
+/* Assuming .container wraps both .top-bar and the main content */
+.container {
+  max-width: 750px; /* or your desired width */
+  margin: 0 auto; /* Center the container */
+  position: relative; /* Context for absolute positioning */
+}
+
 .top-bar {
   display: flex;
   justify-content: space-between;
   padding: 5px;
   background-color: #333;
   color: white;
-  position: fixed;
+  position: absolute; /* Change from fixed to absolute */
   top: 0;
-  left: 0; /* Ensure the bar starts from the far left */
-  right: 0; /* Stretch the bar to the far right */
-  z-index: 1000; /* Ensure top-bar stays on top of other content */
+  left: 0;
+  right: 0;
+  z-index: 1000;
 }
 
 /* Add padding to body to prevent top-bar overlap */
@@ -25,29 +32,16 @@ body {
 
 #content-dropdown,
 .right-boxes button {
-  height: 40px; /* Set a fixed height for both dropdown and buttons */
-  line-height: 40px; /* Align text vertically in the center */
-}
-
-.right-boxes {
-  display: flex;
-  flex-wrap: nowrap;
+  padding: 2px 5px; /* Reduce padding for compactness */
+  font-size: 10px; /* Adjust font size for compactness */
+  height: auto; /* Allow height to adjust based on content, or set a specific compact height */
+  min-height: 20px; /* Optional: Ensure a minimum height for better visibility */
 }
 
 .right-boxes button {
-  padding: 5px 10px;
-  font-size: 12px;
   margin-left: 5px;
-  min-width: 30px;
+  min-width: 30px; /* Adjust based on content or preference for compactness */
   text-align: center;
-  /* Remove specific height setting if it was here, use class level setting instead */
-}
-
-.container {
-  max-width: 750px;
-  margin: 0 auto;
-  margin-bottom: 0;
-  background-color: rgb(223, 223, 223);
 }
 
 #content-dropdown {
