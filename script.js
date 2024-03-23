@@ -38,6 +38,7 @@ function loadContent(value) {
       }
       hiddenInput.value = value;
 
+      // Ensuring sections are populated before trying to filter them.
       populateSectionDropdown();
     })
     .catch((error) => {
@@ -67,6 +68,7 @@ function populateSectionDropdown() {
     sectionDropdown.style.display = "";
     if (section) {
       document.getElementById("section-dropdown").value = section;
+      // Directly calling filterSection here after ensuring the dropdown is populated.
       filterSection(section);
     }
   } else {
