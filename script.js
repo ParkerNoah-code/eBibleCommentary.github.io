@@ -59,20 +59,22 @@ function loadContent(value) {
 
 function checkForNavTargets() {
   const navButton = document.getElementById("back-button");
-
   const contentArea = document.getElementById("content-area");
   const nav = contentArea.querySelector("nav");
-  const targetContent = nav.getAttribute("contentNav");
-  const targetSection = nav.getAttribute("sectionNav");
 
-  if (targetContent) {
-    navButton.style.display = "inline-block";
-    navButton.onclick = () => {
-      loadContent(targetContent);
-      if (targetSection) {
-        filterSection(targetSection);
-      }
-    };
+  if (nav) {
+    const targetContent = nav.getAttribute("contentNav");
+    const targetSection = nav.getAttribute("sectionNav");
+
+    if (targetContent) {
+      navButton.style.display = "inline-block";
+      navButton.onclick = () => {
+        loadContent(targetContent);
+        if (targetSection) {
+          filterSection(targetSection);
+        }
+      };
+    }
   } else {
     navButton.style.display = "none";
   }
