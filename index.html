@@ -43,13 +43,15 @@
           <option value="Bible/Jude/Jude">Jude</option>
           <option value="Bible/Rev/Rev">Revelation</option>
         </select>
-        <div class="dynamic-box">
-          <button id="back-button" style="display: none">Go to Section</button>
+        <div class="right-container">
+          <div class="dynamic-box">
+            <button id="back-button" style="display: none">🔙</button>
+          </div>
+          <select
+            id="section-dropdown"
+            onchange="filterSection(this.value)"
+          ></select>
         </div>
-        <select
-          id="section-dropdown"
-          onchange="filterSection(this.value)"
-        ></select>
       </div>
 
       <div id="content-area"></div>

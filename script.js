@@ -58,10 +58,12 @@ function loadContent(value) {
 }
 
 function checkForNavTargets() {
-  const contentArea = document.getElementById("content-area");
   const navButton = document.getElementById("back-button");
-  const targetContent = contentArea.getAttribute("contentNav");
-  const targetSection = contentArea.getAttribute("sectionNav");
+  const contentArea = document.getElementById("content-area");
+
+  const nav = contentArea.getElementById("back-button");
+  const targetContent = nav.getAttribute("contentNav");
+  const targetSection = nav.getAttribute("sectionNav");
 
   if (targetContent) {
     navButton.style.display = "inline-block";

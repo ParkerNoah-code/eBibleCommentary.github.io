@@ -15,20 +15,21 @@
   overflow-y: auto;
 }
 
-.dynamic-dynamic {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: center;
-}
-
 .dynamic-box button {
-  padding: 0;
-  font-size: 12px;
-  margin-left: 5px;
   width: 19px;
   height: 19px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
   text-align: center;
+}
+
+.right-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .container {
