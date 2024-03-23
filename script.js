@@ -1,6 +1,10 @@
 function updateURLParameter(param, value) {
   const url = new URL(window.location);
-  url.searchParams.set(param, value);
+  if (value === null || value === undefined) {
+    url.searchParams.delete(param);
+  } else {
+    url.searchParams.set(param, value);
+  }
   window.history.pushState({}, "", url);
 }
 
@@ -48,9 +52,6 @@ function populateSectionDropdown() {
   const sections = document.querySelectorAll("#content-area > div");
   const sectionDropdown = document.getElementById("section-dropdown");
   sectionDropdown.innerHTML = "";
-  const url = new URL(window.location);
-  const currentContent = url.searchParams.get("content");
-  const hiddenContent = document.getElementById("current-content").value;
 
   sections.forEach((section) => {
     const option = document.createElement("option");
@@ -59,11 +60,17 @@ function populateSectionDropdown() {
     sectionDropdown.appendChild(option);
   });
 
-  sectionDropdown.style.display = sections.length > 0 ? "" : "none";
+  const urlParams = new URLSearchParams(window.location.search);
+  const section = urlParams.get("section");
 
-  if (currentContent !== hiddenContent) {
-    url.searchParams.delete("section");
-    window.history.pushState({}, "", url);
+  if (sections.length > 0) {
+    sectionDropdown.style.display = "";
+    if (section) {
+      document.getElementById("section-dropdown").value = section;
+      filterSection(section);
+    }
+  } else {
+    sectionDropdown.style.display = "none";
   }
 }
 
@@ -73,8 +80,7 @@ function filterSection(sectionId) {
   const sections = document.querySelectorAll("#content-area > div");
 
   sections.forEach((section) => {
-    section.style.display =
-      section.id === sectionId || sectionId === "" ? "" : "none";
+    section.style.display = section.id === sectionId ? "" : "none";
   });
 }
 
