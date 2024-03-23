@@ -24,6 +24,16 @@ function loadContent(value) {
     .then((html) => {
       const contentArea = document.getElementById("content-area");
       contentArea.innerHTML = html;
+
+      let hiddenInput = document.getElementById("current-content");
+      if (!hiddenInput) {
+        hiddenInput = document.createElement("input");
+        hiddenInput.type = "hidden";
+        hiddenInput.id = "current-content";
+        contentArea.appendChild(hiddenInput);
+      }
+      hiddenInput.value = value;
+
       populateSectionDropdown();
     })
     .catch((error) => {
@@ -37,8 +47,10 @@ function loadContent(value) {
 function populateSectionDropdown() {
   const sections = document.querySelectorAll("#content-area > div");
   const sectionDropdown = document.getElementById("section-dropdown");
-
   sectionDropdown.innerHTML = "";
+  const url = new URL(window.location);
+  const currentContent = url.searchParams.get("content");
+  const hiddenContent = document.getElementById("current-content").value;
 
   sections.forEach((section) => {
     const option = document.createElement("option");
@@ -47,13 +59,11 @@ function populateSectionDropdown() {
     sectionDropdown.appendChild(option);
   });
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const section = urlParams.get("section");
-  if (section) {
-    document.getElementById("section-dropdown").value = section;
-    filterSection(section);
-  } else {
-    sectionDropdown.selectedIndex = -1;
+  sectionDropdown.style.display = sections.length > 0 ? "" : "none";
+
+  if (currentContent !== hiddenContent) {
+    url.searchParams.delete("section");
+    window.history.pushState({}, "", url);
   }
 }
 
