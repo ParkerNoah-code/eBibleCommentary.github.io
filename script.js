@@ -59,9 +59,9 @@ function loadContent(value) {
 
 function checkForNavTargets() {
   const navButton = document.getElementById("back-button");
-  const contentArea = document.getElementById("content-area");
 
-  const nav = contentArea.getElementById("back-button");
+  const contentArea = document.getElementById("content-area");
+  const nav = contentArea.querySelector("nav");
   const targetContent = nav.getAttribute("contentNav");
   const targetSection = nav.getAttribute("sectionNav");
 
