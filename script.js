@@ -15,6 +15,17 @@ function loadContentFromURL() {
 }
 
 function loadContent(value) {
+  const urlParams = new URLSearchParams(window.location.search);
+  const contentInURL = urlParams.get("content");
+
+  // Decode the content from the URL for comparison.
+  const decodedContentInURL = decodeURIComponent(contentInURL || "");
+
+  // Check if content in URL matches the value; if not, remove 'section' from URL.
+  if (decodedContentInURL !== value) {
+    updateURLParameter("section", null);
+  }
+
   const fileName = value + ".html";
   updateURLParameter("content", value);
 
@@ -38,7 +49,6 @@ function loadContent(value) {
       }
       hiddenInput.value = value;
 
-      // Ensuring sections are populated before trying to filter them.
       populateSectionDropdown();
     })
     .catch((error) => {
