@@ -12,6 +12,7 @@
       <div class="top-bar">
         <select id="content-dropdown" onchange="loadContent(this.value)">
           <option value="about">Select Book</option>
+          <option value="Theology/Biblical/Covenant">Covenant</option>
           <option value="Theology/Theology">Theology</option>
           <option value="Bible/Gen/Gen">Genesis</option>
           <option value="Bible/Lev/Lev">Leviticus</option>
@@ -43,87 +44,14 @@
           <option value="Bible/Jude/Jude">Jude</option>
           <option value="Bible/Rev/Rev">Revelation</option>
         </select>
-        <div class="right-boxes">
-          <button id="showI">I</button>
-          <button id="showT">T</button>
-          <button id="showG">G</button>
-          <button id="showF">F</button>
-          <button id="showC">C</button>
-          <button id="showS">S</button>
-          <button id="showE">E</button>
-          <button id="showB">B</button>
-          <button id="showH">H</button>
-          <button id="showM">M</button>
-          <button id="showD">D</button>
-          <button id="showK">K</button>
-          <button id="showO">O</button>
-          <button id="showU">U</button>
-          <button id="showN">N</button>
-          <button id="showA">A</button>
-          <button id="showR">R</button>
-          <button id="showL">L</button>
-          <button id="showW">W</button>
-          <button id="showP">P</button>
-          <button id="showJ">J</button>
-        </div>
+        <select
+          id="section-dropdown"
+          onchange="filterSection(this.value)"
+        ></select>
       </div>
-      <div id="content-area">
-        <section>
-          <h1>About</h1>
-          <p>
-            This site was created to teach the Bible and its theology from a
-            biblical Reformed Baptist perspective. It is my hope and prayer that
-            this will be edifying if the Lord wills!
-          </p>
-          <p>
-            "The words of the wise are like goads, and masters of these
-            collections are like driven nails; they are given by one Shepherd.
-            But beyond this, my son, be warned: the writing of many books is
-            endless, and excessive study is wearying to the body."
-          </p>
-          <p>
-            "The conclusion, when everything has been heard, is: fear God and
-            keep His commandments, because this applies to every person. For God
-            will bring every act to judgment, everything which is hidden,
-            whether it is good or evil." - Ecclesiastes 12:11-14 (NASB).
-          </p>
-          <p>
-            Public domain materials are used extensively and cited throughout.
-            Certain sections may not reflect my views accurately while this
-            website is still in early development, but I am actively employing
-            and revising materials from the public domain. The Bible texts I'm
-            using are also in the public domain, and I note in the commentary
-            sections if I deviate from them.
-          </p>
-          <h2>English Text:</h2>
-          <p>
-            <a href="https://ebible.org/web/" target="_blank"
-              ><span><em>World English Bible</em></span></a
-            >
-            (WEB).
-          </p>
-          <h2>Hebrew Text:</h2>
-          <p>
-            <a href="http://www.tanach.us/" target="_blank"
-              ><em>Westminster Leningrad Codex</em></a
-            >
-            (WLC 4.20).
-          </p>
-          <h2>Greek Text:</h2>
-          <p>
-            <a href="https://sites.google.com/site/nestle1904/" target="_blank"
-              ><span><em>Nestle 1904 Greek New testament</em></span></a
-            >
-            (Novum Testamentum Graece).
-          </p>
-          <h2>Latin Text:</h2>
-          <p>
-            <a href="https://sacred-texts.com/bib/vul/index.htm" target="_blank"
-              ><span><em>1598 Vulgate</em></span></a
-            >.
-          </p>
-        </section>
-      </div>
+
+      <div id="content-area"></div>
+
       <footer>
         <p>&copy; 2023 ebiblecommentary. All rights reserved.</p>
       </footer>

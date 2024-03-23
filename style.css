@@ -9,25 +9,10 @@
   color: white;
 }
 
-#content-dropdown {
+#content-dropdown,
+#section-dropdown {
   max-height: 150px;
   overflow-y: auto;
-}
-
-.right-boxes {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: center;
-}
-
-.right-boxes button {
-  padding: 0;
-  font-size: 12px;
-  margin-left: 5px;
-  width: 19px;
-  height: 19px;
-  text-align: center;
 }
 
 .container {

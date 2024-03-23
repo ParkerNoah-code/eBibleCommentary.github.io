@@ -1,102 +1,73 @@
-document.addEventListener("DOMContentLoaded", function () {
-  // Accessing essential DOM elements
-  const contentArea = document.getElementById("content-area");
-  const contentDropdown = document.getElementById("content-dropdown");
-  const rightBoxes = document.querySelectorAll(".right-boxes button");
-  const hiddenInput = document.createElement("input");
-  hiddenInput.type = "hidden";
-  hiddenInput.id = "current-content-name";
-  contentArea.appendChild(hiddenInput);
+function updateURLParameter(param, value) {
+  const url = new URL(window.location);
+  url.searchParams.set(param, value);
+  window.history.pushState({}, "", url);
+}
 
-  // Function to load content based on the contentName and optionally a displayId
-  window.loadContent = function (contentName, displayId = null) {
-    hiddenInput.value = contentName;
+function loadContentFromURL() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const content = urlParams.get("content") || "about";
+  loadContent(content);
+}
 
-    fetch(`${contentName}.html`)
-      .then((response) => {
-        if (!response.ok) throw new Error("Network response was not ok");
-        return response.text();
-      })
-      .then((html) => {
-        contentArea.innerHTML = html;
-        updateButtonVisibility();
-        if (displayId) {
-          // Display content by the specified id if provided
-          displayContentById(displayId);
-        } else {
-          // Update without specifying a displayId
-          updateURL(contentName);
-        }
-      })
-      .catch((error) => {
-        console.error("Failed to load content:", error);
-      });
-  };
+function loadContent(value) {
+  const fileName = value + ".html";
+  updateURLParameter("content", value);
 
-  // Updates the visibility of buttons based on content availability
-  function updateButtonVisibility() {
-    rightBoxes.forEach((button) => {
-      const contentId = button.id.replace("show", "");
-      if (contentArea.querySelector(`#${contentId}`)) {
-        button.style.display = "";
-      } else {
-        button.style.display = "none";
+  fetch(fileName)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
+      return response.text();
+    })
+    .then((html) => {
+      const contentArea = document.getElementById("content-area");
+      contentArea.innerHTML = html;
+      populateSectionDropdown();
+    })
+    .catch((error) => {
+      console.error("There was a problem with your fetch operation:", error);
+      document.getElementById(
+        "content-area"
+      ).innerHTML = `<p>Error loading content. Please try again.</p>`;
     });
-  }
+}
 
-  // Displays content by id
-  function displayContentById(buttonId) {
-    const contentDivs = contentArea.querySelectorAll("div");
-    contentDivs.forEach((div) => {
-      div.style.display = div.id === buttonId ? "" : "none";
-    });
-  }
+function populateSectionDropdown() {
+  const sections = document.querySelectorAll("#content-area > div");
+  const sectionDropdown = document.getElementById("section-dropdown");
 
-  // Updates the URL based on contentName and optionally a buttonId/displayId
-  function updateURL(contentName, displayId = null) {
-    let newPath = `${window.location.pathname}?content=${contentName}`;
-    if (displayId) {
-      // Update the path with displayId if provided
-      newPath += `&buttonId=${displayId}`;
-    }
-    window.history.pushState({ path: newPath }, "", newPath);
-  }
+  sectionDropdown.innerHTML = "";
 
-  // Event listeners for right box buttons to handle custom navigation and display
-  rightBoxes.forEach((button) => {
-    button.addEventListener("click", function () {
-      const buttonId = this.id.replace("show", "");
-      const targetDiv = contentArea.querySelector(`#${buttonId}`);
-      const navigateAttribute = targetDiv?.getAttribute("navigate");
-      const displayId = targetDiv?.getAttribute("display-id");
-
-      if (navigateAttribute) {
-        // Load content based on navigate attribute, and optionally display content by displayId
-        window.loadContent(navigateAttribute, displayId);
-      } else {
-        // Default functionality if 'navigate' and 'display-id' attributes do not exist
-        displayContentById(buttonId);
-        updateURL(hiddenInput.value, buttonId);
-      }
-    });
+  sections.forEach((section) => {
+    const option = document.createElement("option");
+    option.value = section.id;
+    option.textContent = section.getAttribute("dropdownName");
+    sectionDropdown.appendChild(option);
   });
 
-  contentDropdown.addEventListener("change", function () {
-    window.loadContent(this.value);
+  const urlParams = new URLSearchParams(window.location.search);
+  const section = urlParams.get("section");
+  if (section) {
+    document.getElementById("section-dropdown").value = section;
+    filterSection(section);
+  } else {
+    sectionDropdown.selectedIndex = -1;
+  }
+}
+
+function filterSection(sectionId) {
+  updateURLParameter("section", sectionId);
+
+  const sections = document.querySelectorAll("#content-area > div");
+
+  sections.forEach((section) => {
+    section.style.display =
+      section.id === sectionId || sectionId === "" ? "" : "none";
   });
+}
 
-  // Initializes content based on URL parameters
-  (function initContentFromURL() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const contentName = urlParams.get("content");
-    const buttonId = urlParams.get("buttonId");
-
-    if (contentName) {
-      contentDropdown.value = contentName;
-      window.loadContent(contentName, buttonId);
-    } else {
-      updateButtonVisibility();
-    }
-  })();
+document.addEventListener("DOMContentLoaded", () => {
+  loadContentFromURL();
 });
