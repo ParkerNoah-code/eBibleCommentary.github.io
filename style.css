@@ -15,6 +15,22 @@
   overflow-y: auto;
 }
 
+.dynamic-dynamic {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.dynamic-box button {
+  padding: 0;
+  font-size: 12px;
+  margin-left: 5px;
+  width: 19px;
+  height: 19px;
+  text-align: center;
+}
+
 .container {
   max-width: 750px;
   margin: 0 auto;

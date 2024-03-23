@@ -17,11 +17,8 @@ function loadContentFromURL() {
 function loadContent(value) {
   const urlParams = new URLSearchParams(window.location.search);
   const contentInURL = urlParams.get("content");
-
-  // Decode the content from the URL for comparison.
   const decodedContentInURL = decodeURIComponent(contentInURL || "");
 
-  // Check if content in URL matches the value; if not, remove 'section' from URL.
   if (decodedContentInURL !== value) {
     updateURLParameter("section", null);
   }
@@ -50,6 +47,7 @@ function loadContent(value) {
       hiddenInput.value = value;
 
       populateSectionDropdown();
+      checkForNavTargets();
     })
     .catch((error) => {
       console.error("There was a problem with your fetch operation:", error);
@@ -57,6 +55,25 @@ function loadContent(value) {
         "content-area"
       ).innerHTML = `<p>Error loading content. Please try again.</p>`;
     });
+}
+
+function checkForNavTargets() {
+  const contentArea = document.getElementById("content-area");
+  const navButton = document.getElementById("back-button");
+  const targetContent = contentArea.getAttribute("contentNav");
+  const targetSection = contentArea.getAttribute("sectionNav");
+
+  if (targetContent) {
+    navButton.style.display = "inline-block";
+    navButton.onclick = () => {
+      loadContent(targetContent);
+      if (targetSection) {
+        filterSection(targetSection);
+      }
+    };
+  } else {
+    navButton.style.display = "none";
+  }
 }
 
 function populateSectionDropdown() {
@@ -78,7 +95,6 @@ function populateSectionDropdown() {
     sectionDropdown.style.display = "";
     if (section) {
       document.getElementById("section-dropdown").value = section;
-      // Directly calling filterSection here after ensuring the dropdown is populated.
       filterSection(section);
     }
   } else {
