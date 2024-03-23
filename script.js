@@ -60,11 +60,11 @@ function loadContent(value) {
 function checkForNavTargets() {
   const navButton = document.getElementById("back-button");
   const contentArea = document.getElementById("content-area");
-  const nav = contentArea.querySelector("nav");
+  const nav = contentArea.querySelector(".nav");
 
   if (nav) {
-    const targetContent = nav.getAttribute("contentNav");
-    const targetSection = nav.getAttribute("sectionNav");
+    const targetContent = nav.getAttribute("data-content");
+    const targetSection = nav.getAttribute("data-section");
 
     if (targetContent) {
       navButton.style.display = "inline-block";
@@ -74,6 +74,8 @@ function checkForNavTargets() {
           filterSection(targetSection);
         }
       };
+    } else {
+      navButton.style.display = "none";
     }
   } else {
     navButton.style.display = "none";
