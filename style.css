@@ -16,12 +16,10 @@
 }
 
 .dynamic-box button {
-  width: 21px;
-  height: 22px;
-  margin-right: 8px;
-  color: red;
-  border-radius: 50%;
-  padding-left: 1px;
+  margin-left: 6px;
+  border: none;
+  background: none;
+  cursor: pointer;
 }
 
 .right-container {
