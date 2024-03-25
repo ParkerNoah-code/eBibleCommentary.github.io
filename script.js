@@ -116,6 +116,8 @@ function filterSection(sectionId) {
   sections.forEach((section) => {
     section.style.display = section.id === sectionId ? "" : "none";
   });
+
+  window.scrollTo(0, 0);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
