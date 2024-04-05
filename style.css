@@ -120,3 +120,12 @@ img {
 footer {
   padding-left: 10px;
 }
+
+@media print {
+  .top-bar,
+  #content-dropdown,
+  #section-dropdown,
+  .dynamic-box button {
+    display: none !important;
+  }
+}
