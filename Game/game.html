@@ -1,0 +1,16 @@
+<p id="story">
+  You find yourself in a dark room with two doors. Do you go through
+  <a href="#" onclick="makeChoice('door1')">Door 1</a> or
+  <a href="#" onclick="makeChoice('door2')">Door 2</a>?
+</p>
+<script>
+  function makeChoice(choice) {
+    let message;
+    if (choice === "door1") {
+      message = "You enter a sunny field. You've escaped!";
+    } else {
+      message = "You find another dark room...endless loop!";
+    }
+    document.getElementById("story").innerText = message;
+  }
+</script>
