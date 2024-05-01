@@ -120,6 +120,22 @@ function filterSection(sectionId) {
   window.scrollTo(0, 0);
 }
 
+function showPopupContent(sectionId) {
+  const infoElement = document.getElementById(sectionId);
+  if (infoElement) {
+    alert(infoElement.textContent);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   loadContentFromURL();
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("sup[info]").forEach((sup) => {
+    sup.addEventListener("click", function () {
+      const infoId = this.getAttribute("info");
+      updateURLParameter("section", infoId);
+    });
+  });
 });
