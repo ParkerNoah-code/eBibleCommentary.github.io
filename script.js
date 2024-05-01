@@ -120,22 +120,21 @@ function filterSection(sectionId) {
   window.scrollTo(0, 0);
 }
 
-function showPopupContent(sectionId) {
-  const infoElement = document.getElementById(sectionId);
-  if (infoElement) {
-    alert(infoElement.textContent);
-  }
+function setupPopup() {
+  const infoIcon = document.querySelector('sup[info="section1"]');
+  infoIcon.addEventListener("click", function () {
+    const sectionContent = document.getElementById("section1").innerHTML;
+    document.getElementById("popup-content").innerHTML = sectionContent;
+    document.getElementById("popup").style.display = "block";
+  });
+
+  const closeButton = document.getElementById("close-popup");
+  closeButton.addEventListener("click", function () {
+    document.getElementById("popup").style.display = "none";
+  });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   loadContentFromURL();
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll("sup[info]").forEach((sup) => {
-    sup.addEventListener("click", function () {
-      const infoId = this.getAttribute("info");
-      updateURLParameter("section", infoId);
-    });
-  });
+  setupPopup();
 });
