@@ -123,13 +123,3 @@ function filterSection(sectionId) {
 document.addEventListener("DOMContentLoaded", () => {
   loadContentFromURL();
 });
-
-document.addEventListener("DOMContentLoaded", function () {
-  document.body.addEventListener("click", function (event) {
-    if (event.target.matches("sup[info]")) {
-      const sectionId = event.target.getAttribute("info");
-      const content = document.getElementById(sectionId).innerHTML;
-      openPopup(content);
-    }
-  });
-});
