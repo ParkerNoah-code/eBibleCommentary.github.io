@@ -120,59 +120,17 @@ function filterSection(sectionId) {
   window.scrollTo(0, 0);
 }
 
-function createPopup() {
-  const overlay = document.createElement("div");
-  overlay.id = "popup-overlay";
-  overlay.className = "popup-overlay";
-  document.body.appendChild(overlay);
-
-  const content = document.createElement("div");
-  content.className = "popup-content";
-  overlay.appendChild(content);
-
-  const closeButton = document.createElement("span");
-  closeButton.className = "popup-close";
-  closeButton.innerHTML = "&times;";
-  closeButton.onclick = function () {
-    closePopup();
-  };
-  content.appendChild(closeButton);
-
-  overlay.onclick = function (event) {
-    if (event.target === overlay) {
-      closePopup();
-    }
-  };
-
-  return overlay;
-}
-
-function openPopup(htmlContent) {
-  const popup = document.getElementById("popup-overlay") || createPopup();
-  const content = popup.querySelector(".popup-content");
-  content.children[1].innerHTML = htmlContent; // Skip the close button
-  popup.style.display = "flex";
-}
-
-function closePopup() {
-  const popup = document.getElementById("popup-overlay");
-  if (popup) {
-    popup.style.display = "none";
-  }
-}
-
-document.querySelectorAll("sup[info]").forEach((element) => {
-  element.onclick = function () {
-    const sectionId = this.getAttribute("info");
-    const content = document.getElementById(sectionId).innerHTML;
-    openPopup(content);
-  };
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll("sup[info]").forEach((element) => {
+    console.log("Event listener added to:", element);
+    element.onclick = function () {
+      const sectionId = this.getAttribute("info");
+      const content = document.getElementById(sectionId).innerHTML;
+      alert("Content to show: " + content);
+    };
+  });
 });
 
 document.addEventListener("DOMContentLoaded", () => {
   loadContentFromURL();
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-  createPopup();
 });
