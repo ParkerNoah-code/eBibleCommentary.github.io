@@ -125,24 +125,29 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
+  const closePopupButton = document.getElementById("close-popup");
+  const popupOverlay = document.getElementById("popup-overlay");
+
+  if (closePopupButton && popupOverlay) {
+    closePopupButton.addEventListener("click", function () {
+      popupOverlay.style.display = "none";
+    });
+
+    popupOverlay.addEventListener("click", function (event) {
+      if (event.target === this) {
+        this.style.display = "none";
+      }
+    });
+  }
+
   document.querySelectorAll("sup[info]").forEach((element) => {
     element.addEventListener("click", function () {
       const infoId = this.getAttribute("info");
-      const sectionContent = document.getElementById(infoId).innerHTML;
+      const sectionContent = document.getElementById(infoId)
+        ? document.getElementById(infoId).innerHTML
+        : "";
       document.getElementById("popup-text").innerHTML = sectionContent;
-      document.getElementById("popup-overlay").style.display = "flex";
+      popupOverlay.style.display = "flex";
     });
   });
-
-  document.getElementById("close-popup").addEventListener("click", function () {
-    document.getElementById("popup-overlay").style.display = "none";
-  });
-
-  document
-    .getElementById("popup-overlay")
-    .addEventListener("click", function (event) {
-      if (event.target === this) {
-        document.getElementById("popup-overlay").style.display = "none";
-      }
-    });
 });
