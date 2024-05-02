@@ -123,31 +123,3 @@ function filterSection(sectionId) {
 document.addEventListener("DOMContentLoaded", () => {
   loadContentFromURL();
 });
-
-document.addEventListener("DOMContentLoaded", () => {
-  const closePopupButton = document.getElementById("close-popup");
-  const popupOverlay = document.getElementById("popup-overlay");
-
-  if (closePopupButton && popupOverlay) {
-    closePopupButton.addEventListener("click", function () {
-      popupOverlay.style.display = "none";
-    });
-
-    popupOverlay.addEventListener("click", function (event) {
-      if (event.target === this) {
-        this.style.display = "none";
-      }
-    });
-  }
-
-  document.querySelectorAll("sup[info]").forEach((element) => {
-    element.addEventListener("click", function () {
-      const infoId = this.getAttribute("info");
-      const sectionContent = document.getElementById(infoId)
-        ? document.getElementById(infoId).innerHTML
-        : "";
-      document.getElementById("popup-text").innerHTML = sectionContent;
-      popupOverlay.style.display = "flex";
-    });
-  });
-});
