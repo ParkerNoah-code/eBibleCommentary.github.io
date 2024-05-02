@@ -120,17 +120,19 @@ function filterSection(sectionId) {
   window.scrollTo(0, 0);
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  document.querySelectorAll("sup[info]").forEach((element) => {
-    console.log("Event listener added to:", element);
-    element.onclick = function () {
-      const sectionId = this.getAttribute("info");
-      const content = document.getElementById(sectionId).innerHTML;
-      alert("Content to show: " + content);
-    };
-  });
-});
-
 document.addEventListener("DOMContentLoaded", () => {
   loadContentFromURL();
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("Document is ready.");
+  const supElements = document.querySelectorAll("sup[info]");
+  console.log("Found elements:", supElements.length);
+
+  supElements.forEach((element) => {
+    console.log("Adding click listener to:", element);
+    element.onclick = function () {
+      alert("Info attribute value: " + this.getAttribute("info"));
+    };
+  });
 });
