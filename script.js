@@ -120,21 +120,29 @@ function filterSection(sectionId) {
   window.scrollTo(0, 0);
 }
 
-function setupPopup() {
-  const infoIcon = document.querySelector('sup[info="section1"]');
-  infoIcon.addEventListener("click", function () {
-    const sectionContent = document.getElementById("section1").innerHTML;
-    document.getElementById("popup-content").innerHTML = sectionContent;
-    document.getElementById("popup").style.display = "block";
-  });
-
-  const closeButton = document.getElementById("close-popup");
-  closeButton.addEventListener("click", function () {
-    document.getElementById("popup").style.display = "none";
-  });
-}
-
 document.addEventListener("DOMContentLoaded", () => {
   loadContentFromURL();
-  setupPopup();
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("sup[info]").forEach((element) => {
+    element.addEventListener("click", function () {
+      const infoId = this.getAttribute("info");
+      const sectionContent = document.getElementById(infoId).innerHTML;
+      document.getElementById("popup-text").innerHTML = sectionContent;
+      document.getElementById("popup-overlay").style.display = "flex";
+    });
+  });
+
+  document.getElementById("close-popup").addEventListener("click", function () {
+    document.getElementById("popup-overlay").style.display = "none";
+  });
+
+  document
+    .getElementById("popup-overlay")
+    .addEventListener("click", function (event) {
+      if (event.target === this) {
+        document.getElementById("popup-overlay").style.display = "none";
+      }
+    });
 });
