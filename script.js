@@ -125,14 +125,11 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("Document is ready.");
-  const supElements = document.querySelectorAll("sup[info]");
-  console.log("Found elements:", supElements.length);
-
-  supElements.forEach((element) => {
-    console.log("Adding click listener to:", element);
-    element.onclick = function () {
-      alert("Info attribute value: " + this.getAttribute("info"));
-    };
+  document.body.addEventListener("click", function (event) {
+    if (event.target.matches("sup[info]")) {
+      const sectionId = event.target.getAttribute("info");
+      const content = document.getElementById(sectionId).innerHTML;
+      openPopup(content);
+    }
   });
 });
