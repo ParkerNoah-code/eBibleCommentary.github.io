@@ -3,31 +3,28 @@ function updateURLParameter(param, value) {
   if (value === null || value === undefined) {
     url.searchParams.delete(param);
   } else {
-    url.searchParams.set(param, encodeURIComponent(value).replace(/\//g, "."));
+    url.searchParams.set(param, value);
   }
   window.history.pushState({}, "", url);
 }
 
 function loadContentFromURL() {
   const urlParams = new URLSearchParams(window.location.search);
-  let content = urlParams.get("content") || "about";
-  content = decodeURIComponent(content).replace(/./g, "/");
+  const content = urlParams.get("content") || "about";
   loadContent(content);
 }
 
 function loadContent(value) {
   const urlParams = new URLSearchParams(window.location.search);
   const contentInURL = urlParams.get("content");
-  const decodedContentInURL = decodeURIComponent(
-    (contentInURL || "").replace(/./g, "/")
-  );
+  const decodedContentInURL = decodeURIComponent(contentInURL || "");
 
   if (decodedContentInURL !== value) {
     updateURLParameter("section", null);
   }
 
-  const fileName = value.replace(/\//g, ".") + ".html";
-  updateURLParameter("content", value.replace(/\//g, "."));
+  const fileName = value + ".html";
+  updateURLParameter("content", value);
 
   fetch(fileName)
     .then((response) => {
