@@ -3,6 +3,7 @@ function updateURLParameter(param, value) {
   if (value === null || value === undefined) {
     url.searchParams.delete(param);
   } else {
+    value = value.replace(/\//g, ".");
     url.searchParams.set(param, value);
   }
   window.history.pushState({}, "", url);
@@ -10,13 +11,18 @@ function updateURLParameter(param, value) {
 
 function loadContentFromURL() {
   const urlParams = new URLSearchParams(window.location.search);
-  const content = urlParams.get("content") || "about";
+  let content = urlParams.get("content") || "about";
+
+  content = content.replace(/\//g, ".");
+
   loadContent(content);
 }
 
 function loadContent(value) {
   const urlParams = new URLSearchParams(window.location.search);
-  const contentInURL = urlParams.get("content");
+  let contentInURL = urlParams.get("content");
+
+  contentInURL = contentInURL ? contentInURL.replace(/\//g, ".") : "";
   const decodedContentInURL = decodeURIComponent(contentInURL || "");
 
   if (decodedContentInURL !== value) {
@@ -63,8 +69,10 @@ function checkForNavTargets() {
   const nav = contentArea.querySelector(".nav");
 
   if (nav) {
-    const targetContent = nav.getAttribute("data-content");
+    let targetContent = nav.getAttribute("data-content");
     const targetSection = nav.getAttribute("data-section");
+
+    targetContent = targetContent.replace(/\//g, ".");
 
     if (targetContent) {
       navButton.style.display = "inline-block";
