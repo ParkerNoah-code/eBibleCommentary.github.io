@@ -19,39 +19,18 @@ function loadContentFromURL() {
 }
 
 function loadContent(value) {
-  const urlParams = new URLSearchParams(window.location.search);
-  let contentInURL = urlParams.get("content");
-
-  contentInURL = contentInURL ? contentInURL.replace(/\//g, ".") : "";
-  const decodedContentInURL = decodeURIComponent(contentInURL || "");
-
-  if (decodedContentInURL !== value) {
-    updateURLParameter("section", null);
-  }
+  value = value.replace(/\//g, ".");
 
   const fileName = value + ".html";
   updateURLParameter("content", value);
 
   fetch(fileName)
     .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
+      if (!response.ok) throw new Error("Network response was not ok");
       return response.text();
     })
     .then((html) => {
-      const contentArea = document.getElementById("content-area");
-      contentArea.innerHTML = html;
-
-      let hiddenInput = document.getElementById("current-content");
-      if (!hiddenInput) {
-        hiddenInput = document.createElement("input");
-        hiddenInput.type = "hidden";
-        hiddenInput.id = "current-content";
-        contentArea.appendChild(hiddenInput);
-      }
-      hiddenInput.value = value;
-
+      document.getElementById("content-area").innerHTML = html;
       populateSectionDropdown();
       checkForNavTargets();
     })
@@ -59,7 +38,7 @@ function loadContent(value) {
       console.error("There was a problem with your fetch operation:", error);
       document.getElementById(
         "content-area"
-      ).innerHTML = `<p>Error loading content. Please try again.</p>`;
+      ).innerHTML = `<section><p>Error loading content. Please try again.</p></section>`;
     });
 }
 
@@ -70,17 +49,12 @@ function checkForNavTargets() {
 
   if (nav) {
     let targetContent = nav.getAttribute("data-content");
-    const targetSection = nav.getAttribute("data-section");
-
     targetContent = targetContent.replace(/\//g, ".");
 
     if (targetContent) {
       navButton.style.display = "inline-block";
       navButton.onclick = () => {
         loadContent(targetContent);
-        if (targetSection) {
-          filterSection(targetSection);
-        }
       };
     } else {
       navButton.style.display = "none";
@@ -128,6 +102,18 @@ function filterSection(sectionId) {
   window.scrollTo(0, 0);
 }
 
+function updateNavDataAttributes() {
+  const navElements = document.querySelectorAll(".nav[data-content]");
+  navElements.forEach((el) => {
+    let contentAttr = el.getAttribute("data-content");
+    if (contentAttr.includes("/")) {
+      contentAttr = contentAttr.replace(/\//g, ".");
+      el.setAttribute("data-content", contentAttr);
+    }
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  updateNavDataAttributes();
   loadContentFromURL();
 });
