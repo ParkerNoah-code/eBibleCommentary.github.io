@@ -3,7 +3,8 @@ function updateURLParameter(param, value) {
   if (value === null || value === undefined) {
     url.searchParams.delete(param);
   } else {
-    url.searchParams.set(param, value);
+    const modifiedValue = value.replace(/\//g, ".");
+    url.searchParams.set(param, modifiedValue);
   }
   window.history.pushState({}, "", url);
 }
@@ -11,20 +12,23 @@ function updateURLParameter(param, value) {
 function loadContentFromURL() {
   const urlParams = new URLSearchParams(window.location.search);
   const content = urlParams.get("content") || "about";
-  loadContent(content);
+  loadContent(content.replace(/\./g, "/"));
 }
 
 function loadContent(value) {
   const urlParams = new URLSearchParams(window.location.search);
   const contentInURL = urlParams.get("content");
-  const decodedContentInURL = decodeURIComponent(contentInURL || "");
+  const decodedContentInURL = decodeURIComponent(contentInURL || "").replace(
+    /\./g,
+    "/"
+  );
 
   if (decodedContentInURL !== value) {
     updateURLParameter("section", null);
   }
 
   const fileName = value + ".html";
-  updateURLParameter("content", value);
+  updateURLParameter("content", value.replace(/\//g, "."));
 
   fetch(fileName)
     .then((response) => {
