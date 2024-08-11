@@ -18,6 +18,9 @@ async function loadContentFromURL() {
       "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs"
     );
     mermaid.initialize({ startOnLoad: true });
+    loadContent(content.replace(/\./g, "/"));
+    mermaid.init(undefined, document.querySelectorAll(".mermaid"));
+    return;
   } catch {}
 
   loadContent(content.replace(/\./g, "/"));
