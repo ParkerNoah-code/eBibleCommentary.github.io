@@ -9,20 +9,9 @@ function updateURLParameter(param, value) {
   window.history.pushState({}, "", url);
 }
 
-async function loadContentFromURL() {
+function loadContentFromURL() {
   const urlParams = new URLSearchParams(window.location.search);
   const content = urlParams.get("content") || "about";
-
-  try {
-    const mermaid = await import(
-      "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs"
-    );
-    mermaid.initialize({ startOnLoad: true });
-    loadContent(content.replace(/\./g, "/"));
-    mermaid.init(undefined, document.querySelectorAll(".mermaid"));
-    return;
-  } catch {}
-
   loadContent(content.replace(/\./g, "/"));
 }
 
