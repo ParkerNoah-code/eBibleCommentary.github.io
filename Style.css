@@ -34,6 +34,12 @@ body {
   background-color: #45a049;
 }
 
+img {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+}
+
 section {
   width: 80%;
   max-width: 800px;
