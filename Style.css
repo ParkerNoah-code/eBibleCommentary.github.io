@@ -15,8 +15,8 @@ body {
 }
 
 .container {
-  max-width: 750px; /* Maximum width of the page */
-  margin: 0 auto; /* Center the page horizontally */
+  max-width: 750px;
+  margin: 0 auto;
   background-color: rgb(223, 223, 223);
 }
 
@@ -187,19 +187,4 @@ img {
   img {
     display: none;
   }
-}
-
-#mandelbrotContainer {
-  display: flex;
-  justify-content: center; /* Horizontally center the content */
-  align-items: center; /* Vertically center the content */
-  width: 100%;
-  height: auto;
-  overflow: hidden; /* Prevent scrollbars if the canvas is larger than the viewport */
-}
-
-#mandelbrotCanvas {
-  flex-shrink: 0; /* Prevent canvas from shrinking */
-  max-width: 100%; /* Maximum width is the full width of the container */
-  height: auto;
 }
